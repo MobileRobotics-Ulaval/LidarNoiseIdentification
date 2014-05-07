@@ -1,4 +1,5 @@
 function allData = aggregateData_angles(sensor, x)
+% Aggregates data of every plate and angle (angle dataset)
 
 load '/home/cantor/Desktop/Robotique/matlab_scripts/data/data_angle.mat';
 %sensor = {'utm', 'lms'};

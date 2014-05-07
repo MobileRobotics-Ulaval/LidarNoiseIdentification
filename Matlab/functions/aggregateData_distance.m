@@ -1,4 +1,5 @@
 function allData = aggregateData_distance(sensor, location, x)
+% Aggregates data of every plate and distance (distance dataset)
 
 load '/home/cantor/Desktop/Robotique/matlab_scripts/data/data_distance.mat';
 plate = {'alu', 'board', 'steel', 'iron'};
