@@ -1,7 +1,7 @@
 function data = generatePoses_angle(data, sensor, location, plate, angle, plotData, corrData, qradii, forceRecompute)
 
 corrZ = -0.265;
-indoorRaw = importdata('../data/leica_angle.txt');
+indoorRaw = importdata('../../../data/leica_angle.txt');
 
 plateIDs = data.(sensor).(location).(plate).(angle).plateIDs;
 

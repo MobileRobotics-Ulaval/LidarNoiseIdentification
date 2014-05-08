@@ -1,7 +1,7 @@
 function data = generatePoses_distance(data, sensor, location, plate, dist, plotData, corrData, qradii, forceRecompute)
 
 corrZ = -0.265;
-indoorRaw = importdata(['../data/leica_', location, '.txt']);
+indoorRaw = importdata(['../../../data/leica_', location, '.txt']);
 
 plateIDs = data.(sensor).(location).(plate).(dist).plateIDs;
 

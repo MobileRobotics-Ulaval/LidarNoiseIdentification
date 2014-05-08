@@ -10,19 +10,19 @@ dErr = dErr(dInt>0);
 dDist = dDist(dInt>0);
 %dInc = dInc(dInt>0);
 
-step = 10;
+step = 18;
 
 hold on;
 scatter(dInt(1:step:end), dErr(1:step:end), 4, dDist(1:step:end));
-[dx, dy, dw] = statsPerBin(dInt(1:step:end), dErr(1:step:end), 50);
-plot(dx(:,1),dy(:,1),'--k')
-plot(dx(:,1),dy(:,2),'.k')
-plot(dx(:,1),dy(:,3),'--k')  
+% [dx, dy, dw] = statsPerBin(dInt(1:step:end), dErr(1:step:end), 50);
+% plot(dx(:,1),dy(:,1),'--k')
+% plot(dx(:,1),dy(:,2),'.k')
+% plot(dx(:,1),dy(:,3),'--k')  
 
-title('board : Color = distance')
+title('board : color = distance')
 xlabel('intensity');
 ylabel('error (m)');
-%ylim([-0.1, 0.1]);
+ylim([-0.1, 0.1]); % outliers
 %xlim([0, 14000]);
 
 
@@ -38,19 +38,19 @@ dErr = dErr(dInt>0);
 dDist = dDist(dInt>0);
 %dInc = dInc(dInt>0);
 
-step = 10;
+step = 18;
 
 hold on;
 scatter(dInt(1:step:end), dErr(1:step:end), 4, dDist(1:step:end));
-[dx, dy, dw] = statsPerBin(dInt(1:step:end), dErr(1:step:end), 50);
-plot(dx(:,1),dy(:,1),'--k')
-plot(dx(:,1),dy(:,2),'.k')
-plot(dx(:,1),dy(:,3),'--k')  
+% [dx, dy, dw] = statsPerBin(dInt(1:step:end), dErr(1:step:end), 50);
+% plot(dx(:,1),dy(:,1),'--k')
+% plot(dx(:,1),dy(:,2),'.k')
+% plot(dx(:,1),dy(:,3),'--k')  
 
-title('alu : Color = distance')
+title('alu : color = distance')
 xlabel('intensity');
 ylabel('error (m)');
-%ylim([-0.1, 0.1]);
+ylim([-0.15, 0.1]);
 %xlim([0, 14000]);
 
 %% iron Distance
@@ -66,16 +66,16 @@ dErr = dErr(dInt>0);
 dDist = dDist(dInt>0);
 %dInc = dInc(dInt>0);
 
-step = 10;
+step = 18;
 
 hold on;
 scatter(dInt(1:step:end), dErr(1:step:end), 4, dDist(1:step:end));
-[dx, dy, dw] = statsPerBin(dInt(1:step:end), dErr(1:step:end), 50);
-plot(dx(:,1),dy(:,1),'--k')
-plot(dx(:,1),dy(:,2),'.k')
-plot(dx(:,1),dy(:,3),'--k')  
+% [dx, dy, dw] = statsPerBin(dInt(1:step:end), dErr(1:step:end), 50);
+% plot(dx(:,1),dy(:,1),'--k')
+% plot(dx(:,1),dy(:,2),'.k')
+% plot(dx(:,1),dy(:,3),'--k')  
 
-title('iron : Color = distance')
+title('iron : color = distance')
 xlabel('intensity');
 ylabel('error (m)');
 %ylim([-0.1, 0.1]);
@@ -95,16 +95,16 @@ dErr = dErr(dInt>0);
 dDist = dDist(dInt>0);
 %dInc = dInc(dInt>0);
 
-step = 10;
+step = 18;
 
 hold on;
 scatter(dInt(1:step:end), dErr(1:step:end), 4, dDist(1:step:end));
-[dx, dy, dw] = statsPerBin(dInt(1:step:end), dErr(1:step:end), 50);
-plot(dx(:,1),dy(:,1),'--k')
-plot(dx(:,1),dy(:,2),'.k')
-plot(dx(:,1),dy(:,3),'--k')  
+% [dx, dy, dw] = statsPerBin(dInt(1:step:end), dErr(1:step:end), 50);
+% plot(dx(:,1),dy(:,1),'--k')
+% plot(dx(:,1),dy(:,2),'.k')
+% plot(dx(:,1),dy(:,3),'--k')  
 
-title('steel : Color = distance')
+title('steel : color = distance')
 xlabel('intensity');
 ylabel('error (m)');
 %ylim([-0.1, 0.1]);
@@ -125,15 +125,15 @@ step = 10;
 
 hold on;
 scatter(dInt(1:step:end), dErr(1:step:end), 4, dInc(1:step:end));
-[dx, dy, dw] = statsPerBin(dInt(1:step:end), dErr(1:step:end), 50);
-plot(dx(:,1),dy(:,1),'--k')
-plot(dx(:,1),dy(:,2),'.k')
-plot(dx(:,1),dy(:,3),'--k')  
+% [dx, dy, dw] = statsPerBin(dInt(1:step:end), dErr(1:step:end), 50);
+% plot(dx(:,1),dy(:,1),'--k')
+% plot(dx(:,1),dy(:,2),'.k')
+% plot(dx(:,1),dy(:,3),'--k')  
 
 title('board : color = incidence')
 xlabel('intensity');
 ylabel('error (m)');
-%ylim([-0.1, 0.1]);
+ylim([-0.02, 0.06]);
 %xlim([0, 14000]);
 
 
@@ -152,15 +152,15 @@ step = 10;
 
 hold on;
 scatter(dInt(1:step:end), dErr(1:step:end), 4, dInc(1:step:end));
-[dx, dy, dw] = statsPerBin(dInt(1:step:end), dErr(1:step:end), 50);
-plot(dx(:,1),dy(:,1),'--k')
-plot(dx(:,1),dy(:,2),'.k')
-plot(dx(:,1),dy(:,3),'--k')  
+% [dx, dy, dw] = statsPerBin(dInt(1:step:end), dErr(1:step:end), 50);
+% plot(dx(:,1),dy(:,1),'--k')
+% plot(dx(:,1),dy(:,2),'.k')
+% plot(dx(:,1),dy(:,3),'--k')  
 
 title('alu : color = incidence')
 xlabel('intensity');
 ylabel('error (m)');
-ylim([-0.5, 0.1]);
+ylim([-0.4, 0.1]);
 %xlim([0, 14000]);
 
 
@@ -179,10 +179,10 @@ step = 10;
 
 hold on;
 scatter(dInt(1:step:end), dErr(1:step:end), 4, dInc(1:step:end));
-[dx, dy, dw] = statsPerBin(dInt(1:step:end), dErr(1:step:end), 50);
-plot(dx(:,1),dy(:,1),'--k')
-plot(dx(:,1),dy(:,2),'.k')
-plot(dx(:,1),dy(:,3),'--k')  
+% [dx, dy, dw] = statsPerBin(dInt(1:step:end), dErr(1:step:end), 50);
+% plot(dx(:,1),dy(:,1),'--k')
+% plot(dx(:,1),dy(:,2),'.k')
+% plot(dx(:,1),dy(:,3),'--k')  
 
 title('iron : color = incidence')
 xlabel('intensity');
@@ -207,13 +207,13 @@ step = 10;
 
 hold on;
 scatter(dInt(1:step:end), dErr(1:step:end), 4, dInc(1:step:end));
-[dx, dy, dw] = statsPerBin(dInt(1:step:end), dErr(1:step:end), 50);
-plot(dx(:,1),dy(:,1),'--k')
-plot(dx(:,1),dy(:,2),'.k')
-plot(dx(:,1),dy(:,3),'--k')  
+% [dx, dy, dw] = statsPerBin(dInt(1:step:end), dErr(1:step:end), 50);
+% plot(dx(:,1),dy(:,1),'--k')
+% plot(dx(:,1),dy(:,2),'.k')
+% plot(dx(:,1),dy(:,3),'--k')  
 
 title('steel : color = incidence')
 xlabel('intensity');
 ylabel('error (m)');
-%ylim([-0.1, 0.1]);
+ylim([-0.03, 0.07]);
 %xlim([0, 14000]);

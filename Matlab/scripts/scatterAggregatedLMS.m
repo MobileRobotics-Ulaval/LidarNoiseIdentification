@@ -65,5 +65,5 @@ plot(ax(:,1),ay(:,3),'--k')
 title('Indoor : color = incidence')
 xlabel('intensity');
 ylabel('error (m)');
-ylim([-0.3, 0.1]);
+ylim([-0.4, 0.1]);
 %xlim([0, 14000]);

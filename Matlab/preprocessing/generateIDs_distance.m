@@ -1,6 +1,6 @@
-
-
 %%
+clear;
+clc;
 %---------------------------------
 % URG
 
@@ -29,7 +29,7 @@ urg.indoor.board.d4_0.bagID = 3;
 %---------------------------------
 % Alu
 
-% La réflexion du sensor sur la plaque induit des erreurs
+% La rï¿½flexion du sensor sur la plaque induit des erreurs
 % urg.indoor.alu.d0_2.plateIDs = [21, 22, 23, 24, 25, 26]; 
 % urg.indoor.alu.d0_2.laserIDs = [39, 40, 41];
 % urg.indoor.alu.d0_2.bagID = 9;
@@ -99,7 +99,7 @@ utm.indoor.folderName = 'UTM_22-Jun-2012-16_06_19/';
 %---------------------------------
 % White Board
 
-% Erreur impossible à expliquer pour l'instant (cercles d'erreurs)
+% Erreur impossible ï¿½ expliquer pour l'instant (cercles d'erreurs)
 % utm.indoor.board.d0_2.plateIDs = [153, 154, 155, 156, 157, 158];
 % utm.indoor.board.d0_2.laserIDs = [159, 160, 161];
 % utm.indoor.board.d0_2.bagID = 15;
@@ -123,7 +123,7 @@ utm.indoor.board.d8_0.bagID = 19;
 %---------------------------------
 % Alu
 
-% La réflexion du sensor sur la plaque induit des erreurs
+% La rï¿½flexion du sensor sur la plaque induit des erreurs
 % utm.indoor.alu.d0_2.plateIDs = [132, 133, 134, 135, 136, 137];
 % utm.indoor.alu.d0_2.laserIDs = [150, 151, 152];
 % utm.indoor.alu.d0_2.bagID = 14;
@@ -219,7 +219,7 @@ utm.outdoor.board.d8_0.bagID = 4;
 %---------------------------------
 % Alu
 
-% La réflexion du sensor sur la plaque induit des erreurs
+% La rï¿½flexion du sensor sur la plaque induit des erreurs
 % utm.outdoor.alu.d0_2.plateIDs = [21, 22, 23, 24, 25, 26];
 % utm.outdoor.alu.d0_2.laserIDs = [39, 40, 41];
 % utm.outdoor.alu.d0_2.bagID = 9;
@@ -320,14 +320,15 @@ lms.outdoor.board.d8_0.bagID = 4;
 %---------------------------------
 % Alu
 
-% La réflexion du sensor sur la plaque induit des erreurs
+% La rï¿½flexion du sensor sur la plaque induit des erreurs
 % lms.outdoor.alu.d0_2.plateIDs = [179, 180, 181, 182, 183, 184];
 % lms.outdoor.alu.d0_2.laserIDs = [197, 198, 199];
 % lms.outdoor.alu.d0_2.bagID = 9;
 
-lms.outdoor.alu.d1_0.plateIDs = [179, 180, 181, 182, 183, 184];
-lms.outdoor.alu.d1_0.laserIDs = [194, 195, 196];
-lms.outdoor.alu.d1_0.bagID = 8;
+% L'angle d'incidence eleve et la plaque reflechissante perd le beam
+% lms.outdoor.alu.d1_0.plateIDs = [179, 180, 181, 182, 183, 184];
+% lms.outdoor.alu.d1_0.laserIDs = [194, 195, 196];
+% lms.outdoor.alu.d1_0.bagID = 8;
 
 lms.outdoor.alu.d2_0.plateIDs = [179, 180, 181, 182, 183, 184];
 lms.outdoor.alu.d2_0.laserIDs = [191, 192, 193];
