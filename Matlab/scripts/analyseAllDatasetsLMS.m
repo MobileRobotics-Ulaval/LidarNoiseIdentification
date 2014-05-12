@@ -40,21 +40,40 @@ step = 1;
 int = int(int>0);
 err = err(int>0);
 dist = dist(int>0);
+int = int(int<2000);
+err = err(int<2000);
+dist = dist(int<2000);
 int = int(1:step:end);
 err = err(1:step:end);
 dist = dist(1:step:end);
 
 
 figure;
-edges = [(1:100:max(int))];
+edgeVector = [(0:50:150), (200:25:325), (340:12:500), 515, 525, 550, 575, 600, 615, 625, 650, 700, 750, 800, 900, (1000:200:max(int))];
 
-count = histc(int,edges);
-bar(edges, count, 'histc')
-set(gca, 'xlim', [edges(1) edges(end)])
+count = histc(int,edgeVector);
+bar(edgeVector, count, 'histc')
+set(gca, 'xlim', [edgeVector(1) edgeVector(end)])
 set(gca, 'YTick', (0:50000:600000));
-set(gca, 'XTick', (0:1000:max(int)));
+set(gca, 'XTick', (0:100:max(int)));
 %xticklabel_rotate(XTick,45,[],'Fontsize',15);
-title('UTM indoor : distribution of intensity', 'Fontsize', 15, 'Fontweight', 'demi')
+title('LMS indoor/outdoor : distribution of intensity', 'Fontsize', 15, 'Fontweight', 'demi')
 xlabel('intensity','Fontsize',15, 'Fontweight', 'demi');
 ylabel('frequency', 'Fontsize', 15, 'Fontweight', 'demi');
 set(gca, 'Fontsize', 15);
+
+
+%% Median graph
+
+figure;
+
+[x_hat, y_hat, w] = ponderedStats(int, err, edgeVector);
+
+plot(x_hat(:,1), y_hat(:,2),'x-k')
+
+title('LMS indoor/outdoor : median', 'Fontsize', 15, 'Fontweight', 'demi')
+xlabel('intensity','Fontsize',15, 'Fontweight', 'demi');
+ylabel('error (m)', 'Fontsize', 15, 'Fontweight', 'demi');
+set(gca, 'XTick', (0:1000:max(int)));
+set(gca, 'Fontsize', 15);
+
