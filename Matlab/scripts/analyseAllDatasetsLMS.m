@@ -68,8 +68,9 @@ set(gca, 'Fontsize', 15);
 figure;
 
 [x_hat, y_hat, w] = ponderedStats(int, err, edgeVector);
-
-plot(x_hat(:,1), y_hat(:,2),'x-k')
+medInt = x_hat(:,1);
+medErr = y_hat(:,2);
+plot(medInt, medErr,'x-k')
 
 title('LMS indoor/outdoor : median', 'Fontsize', 15, 'Fontweight', 'demi')
 xlabel('intensity','Fontsize',15, 'Fontweight', 'demi');
@@ -77,3 +78,6 @@ ylabel('error (m)', 'Fontsize', 15, 'Fontweight', 'demi');
 set(gca, 'XTick', (0:1000:max(int)));
 set(gca, 'Fontsize', 15);
 
+%% Regression Err vs Int
+
+cftool('/home/cantor/Desktop/Robotique/matlab_scripts/regression/LMS_allDatasets_errVSint.sfit');

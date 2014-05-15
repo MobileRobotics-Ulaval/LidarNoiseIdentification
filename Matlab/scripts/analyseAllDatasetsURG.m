@@ -60,8 +60,9 @@ set(gca, 'Fontsize', 15);
 figure;
 
 [x_hat, y_hat, w] = ponderedStats(int, err, edgeVector);
-
-plot(x_hat(:,1), y_hat(:,2),'x-k')
+medInt = x_hat(:,1);
+medErr = y_hat(:,2);
+plot(medInt, medErr,'x-k')
 
 title('URG indoor : median', 'Fontsize', 15, 'Fontweight', 'demi')
 xlabel('intensity','Fontsize',15, 'Fontweight', 'demi');
@@ -69,3 +70,8 @@ ylabel('error (m)', 'Fontsize', 15, 'Fontweight', 'demi');
 set(gca, 'XTick', (0:1000:max(int)));
 set(gca, 'Fontsize', 15);
 
+%% Regression Err vs Int
+
+% 0.07418*exp(-((x-5000)./2000).^2)+0.0403*exp(-((x-5800)./430).^2)+-3e-6*x+-0.013
+
+cftool('/home/cantor/Desktop/Robotique/matlab_scripts/regression/URG_allDatasets_errVSint.sfit');
