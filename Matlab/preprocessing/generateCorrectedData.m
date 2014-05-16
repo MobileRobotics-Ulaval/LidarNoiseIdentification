@@ -2,8 +2,10 @@
 % *** generateIDs_distance before ***
 
 % sensor = {'urg','utm','lms'};
+% location = {'indoor','outdoor'};
+% plate = {'board', 'alu', 'steel', 'iron'};
 sensor = {'utm'};
-location = {'indoor','outdoor'};
+location = {'indoor'};
 plate = {'board', 'alu', 'steel', 'iron'};
 dist = {'d0_2', 'd1_0', 'd2_0', 'd4_0', 'd8_0'};
 

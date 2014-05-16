@@ -5,10 +5,10 @@ load '/home/cantor/Desktop/Robotique/matlab_scripts/data/data_angle.mat';
 
 %% board Distance
 
-dInt = aggregateSinglePlate_distance('utm', 'board', 'indoor', 'int');
-dErr = aggregateSinglePlate_distance('utm', 'board', 'indoor', 'err_d');
-dDist = aggregateSinglePlate_distance('utm', 'board', 'indoor', 'd');
-%dInc = aggregateSinglePlate_distance('utm', 'board', 'indoor', 'inc');
+dInt = aggregateSinglePlate_distance(data_distance,'utm', 'board', 'indoor', 'int');
+dErr = aggregateSinglePlate_distance(data_distance,'utm', 'board', 'indoor', 'err_d');
+dDist = aggregateSinglePlate_distance(data_distance,'utm', 'board', 'indoor', 'd');
+%dInc = aggregateSinglePlate_distance(data_distance,'utm', 'board', 'indoor', 'inc');
 
 dInt = dInt(dInt>0);
 dErr = dErr(dInt>0);
@@ -33,10 +33,10 @@ ylabel('error (m)');
 
 %% alu Distance
 figure;
-dInt = aggregateSinglePlate_distance('utm', 'alu', 'indoor', 'int');
-dErr = aggregateSinglePlate_distance('utm', 'alu', 'indoor', 'err_d');
-dDist = aggregateSinglePlate_distance('utm', 'alu', 'indoor', 'd');
-%dInc = aggregateSinglePlate_distance('utm', 'alu', 'indoor', 'inc');
+dInt = aggregateSinglePlate_distance(data_distance,'utm', 'alu', 'indoor', 'int');
+dErr = aggregateSinglePlate_distance(data_distance,'utm', 'alu', 'indoor', 'err_d');
+dDist = aggregateSinglePlate_distance(data_distance,'utm', 'alu', 'indoor', 'd');
+%dInc = aggregateSinglePlate_distance(data_distance,'utm', 'alu', 'indoor', 'inc');
 
 dInt = dInt(dInt>0);
 dErr = dErr(dInt>0);
@@ -61,10 +61,10 @@ ylabel('error (m)');
 %% iron Distance
 figure;
 
-dInt = aggregateSinglePlate_distance('utm', 'iron', 'indoor', 'int');
-dErr = aggregateSinglePlate_distance('utm', 'iron', 'indoor', 'err_d');
-dDist = aggregateSinglePlate_distance('utm', 'iron', 'indoor', 'd');
-%dInc = aggregateSinglePlate_distance('utm', 'iron', 'indoor', 'inc');
+dInt = aggregateSinglePlate_distance(data_distance,'utm', 'iron', 'indoor', 'int');
+dErr = aggregateSinglePlate_distance(data_distance,'utm', 'iron', 'indoor', 'err_d');
+dDist = aggregateSinglePlate_distance(data_distance,'utm', 'iron', 'indoor', 'd');
+%dInc = aggregateSinglePlate_distance(data_distance,'utm', 'iron', 'indoor', 'inc');
 
 dInt = dInt(dInt>0);
 dErr = dErr(dInt>0);
@@ -90,10 +90,10 @@ ylabel('error (m)');
 %% steel Distance
 figure;
 
-dInt = aggregateSinglePlate_distance('utm', 'steel', 'indoor', 'int');
-dErr = aggregateSinglePlate_distance('utm', 'steel', 'indoor', 'err_d');
-dDist = aggregateSinglePlate_distance('utm', 'steel', 'indoor', 'd');
-%dInc = aggregateSinglePlate_distance('utm', 'steel', 'indoor', 'inc');
+dInt = aggregateSinglePlate_distance(data_distance,'utm', 'steel', 'indoor', 'int');
+dErr = aggregateSinglePlate_distance(data_distance,'utm', 'steel', 'indoor', 'err_d');
+dDist = aggregateSinglePlate_distance(data_distance,'utm', 'steel', 'indoor', 'd');
+%dInc = aggregateSinglePlate_distance(data_distance,'utm', 'steel', 'indoor', 'inc');
 
 dInt = dInt(dInt>0);
 dErr = dErr(dInt>0);
@@ -117,9 +117,9 @@ ylabel('error (m)');
 
 %% Board angle
 
-dInt = aggregateSinglePlate_angle('utm', 'board', 'int');
-dErr = aggregateSinglePlate_angle('utm', 'board', 'err_d');
-dInc = aggregateSinglePlate_angle('utm', 'board', 'inc');
+dInt = aggregateSinglePlate_angle(data_angle,'utm', 'board', 'int');
+dErr = aggregateSinglePlate_angle(data_angle,'utm', 'board', 'err_d');
+dInc = aggregateSinglePlate_angle(data_angle,'utm', 'board', 'inc');
 
 dInt = dInt(dInt>0);
 dErr = dErr(dInt>0);
@@ -143,9 +143,9 @@ ylabel('error (m)');
 
 %% Alu angle
 
-dInt = aggregateSinglePlate_angle('utm', 'alu', 'int');
-dErr = aggregateSinglePlate_angle('utm', 'alu', 'err_d');
-dInc = aggregateSinglePlate_angle('utm', 'alu', 'inc');
+dInt = aggregateSinglePlate_angle(data_angle,'utm', 'alu', 'int');
+dErr = aggregateSinglePlate_angle(data_angle,'utm', 'alu', 'err_d');
+dInc = aggregateSinglePlate_angle(data_angle,'utm', 'alu', 'inc');
 
 dInt = dInt(dInt>0);
 dErr = dErr(dInt>0);
@@ -169,9 +169,9 @@ ylabel('error (m)');
 
 %% Iron angle
 
-dInt = aggregateSinglePlate_angle('utm', 'iron', 'int');
-dErr = aggregateSinglePlate_angle('utm', 'iron', 'err_d');
-dInc = aggregateSinglePlate_angle('utm', 'iron', 'inc');
+dInt = aggregateSinglePlate_angle(data_angle,'utm', 'iron', 'int');
+dErr = aggregateSinglePlate_angle(data_angle,'utm', 'iron', 'err_d');
+dInc = aggregateSinglePlate_angle(data_angle,'utm', 'iron', 'inc');
 
 dInt = dInt(dInt>0);
 dErr = dErr(dInt>0);
@@ -196,9 +196,9 @@ ylabel('error (m)');
 
 %% Steel angle
 
-dInt = aggregateSinglePlate_angle('utm', 'steel', 'int');
-dErr = aggregateSinglePlate_angle('utm', 'steel', 'err_d');
-dInc = aggregateSinglePlate_angle('utm', 'steel', 'inc');
+dInt = aggregateSinglePlate_angle(data_angle,'utm', 'steel', 'int');
+dErr = aggregateSinglePlate_angle(data_angle,'utm', 'steel', 'err_d');
+dInc = aggregateSinglePlate_angle(data_angle,'utm', 'steel', 'inc');
 
 dInt = dInt(dInt>0);
 dErr = dErr(dInt>0);

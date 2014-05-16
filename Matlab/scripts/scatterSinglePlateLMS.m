@@ -5,10 +5,10 @@ load '/home/cantor/Desktop/Robotique/matlab_scripts/data/data_angle.mat';
 
 %% board Distance
 
-dInt = aggregateSinglePlate_distance('lms', 'board', 'outdoor', 'int');
-dErr = aggregateSinglePlate_distance('lms', 'board', 'outdoor', 'err_d');
-dDist = aggregateSinglePlate_distance('lms', 'board', 'outdoor', 'd');
-%dInc = aggregateSinglePlate_distance('lms', 'board', 'outdoor', 'inc');
+dInt = aggregateSinglePlate_distance(data_distance,'lms', 'board', 'outdoor', 'int');
+dErr = aggregateSinglePlate_distance(data_distance,'lms', 'board', 'outdoor', 'err_d');
+dDist = aggregateSinglePlate_distance(data_distance,'lms', 'board', 'outdoor', 'd');
+%dInc = aggregateSinglePlate_distance(data_distance,'lms', 'board', 'outdoor', 'inc');
 
 dInt = dInt(dInt>0);
 dErr = dErr(dInt>0);
@@ -33,10 +33,10 @@ ylim([-0.1, 0.1]); % outliers
 
 %% alu Distance
 figure;
-dInt = aggregateSinglePlate_distance('lms', 'alu', 'outdoor', 'int');
-dErr = aggregateSinglePlate_distance('lms', 'alu', 'outdoor', 'err_d');
-dDist = aggregateSinglePlate_distance('lms', 'alu', 'outdoor', 'd');
-%dInc = aggregateSinglePlate_distance('lms', 'alu', 'outdoor', 'inc');
+dInt = aggregateSinglePlate_distance(data_distance,'lms', 'alu', 'outdoor', 'int');
+dErr = aggregateSinglePlate_distance(data_distance,'lms', 'alu', 'outdoor', 'err_d');
+dDist = aggregateSinglePlate_distance(data_distance,'lms', 'alu', 'outdoor', 'd');
+%dInc = aggregateSinglePlate_distance(data_distance,'lms', 'alu', 'outdoor', 'inc');
 
 dInt = dInt(dInt>0);
 dErr = dErr(dInt>0);
@@ -61,10 +61,10 @@ ylim([-0.15, 0.1]);
 %% iron Distance
 figure;
 
-dInt = aggregateSinglePlate_distance('lms', 'iron', 'outdoor', 'int');
-dErr = aggregateSinglePlate_distance('lms', 'iron', 'outdoor', 'err_d');
-dDist = aggregateSinglePlate_distance('lms', 'iron', 'outdoor', 'd');
-%dInc = aggregateSinglePlate_distance('lms', 'iron', 'outdoor', 'inc');
+dInt = aggregateSinglePlate_distance(data_distance,'lms', 'iron', 'outdoor', 'int');
+dErr = aggregateSinglePlate_distance(data_distance,'lms', 'iron', 'outdoor', 'err_d');
+dDist = aggregateSinglePlate_distance(data_distance,'lms', 'iron', 'outdoor', 'd');
+%dInc = aggregateSinglePlate_distance(data_distance,'lms', 'iron', 'outdoor', 'inc');
 
 dInt = dInt(dInt>0);
 dErr = dErr(dInt>0);
@@ -90,10 +90,10 @@ ylabel('error (m)');
 %% steel Distance
 figure;
 
-dInt = aggregateSinglePlate_distance('lms', 'steel', 'outdoor', 'int');
-dErr = aggregateSinglePlate_distance('lms', 'steel', 'outdoor', 'err_d');
-dDist = aggregateSinglePlate_distance('lms', 'steel', 'outdoor', 'd');
-%dInc = aggregateSinglePlate_distance('lms', 'steel', 'outdoor', 'inc');
+dInt = aggregateSinglePlate_distance(data_distance,'lms', 'steel', 'outdoor', 'int');
+dErr = aggregateSinglePlate_distance(data_distance,'lms', 'steel', 'outdoor', 'err_d');
+dDist = aggregateSinglePlate_distance(data_distance,'lms', 'steel', 'outdoor', 'd');
+%dInc = aggregateSinglePlate_distance(data_distance,'lms', 'steel', 'outdoor', 'inc');
 
 dInt = dInt(dInt>0);
 dErr = dErr(dInt>0);
@@ -118,9 +118,9 @@ ylabel('error (m)');
 %% Board angle
 
 figure;
-dInt = aggregateSinglePlate_angle('lms', 'board', 'int');
-dErr = aggregateSinglePlate_angle('lms', 'board', 'err_d');
-dInc = aggregateSinglePlate_angle('lms', 'board', 'inc');
+dInt = aggregateSinglePlate_angle(data_angle,'lms', 'board', 'int');
+dErr = aggregateSinglePlate_angle(data_angle,'lms', 'board', 'err_d');
+dInc = aggregateSinglePlate_angle(data_angle,'lms', 'board', 'inc');
 
 dInt = dInt(dInt>0);
 dErr = dErr(dInt>0);
@@ -145,9 +145,9 @@ ylim([-0.02, 0.06]);
 %% Alu angle
 
 figure;
-dInt = aggregateSinglePlate_angle('lms', 'alu', 'int');
-dErr = aggregateSinglePlate_angle('lms', 'alu', 'err_d');
-dInc = aggregateSinglePlate_angle('lms', 'alu', 'inc');
+dInt = aggregateSinglePlate_angle(data_angle,'lms', 'alu', 'int');
+dErr = aggregateSinglePlate_angle(data_angle,'lms', 'alu', 'err_d');
+dInc = aggregateSinglePlate_angle(data_angle,'lms', 'alu', 'inc');
 
 dInt = dInt(dInt>0);
 dErr = dErr(dInt>0);
@@ -172,9 +172,9 @@ ylim([-0.4, 0.1]);
 %% Iron angle
 
 figure;
-dInt = aggregateSinglePlate_angle('lms', 'iron', 'int');
-dErr = aggregateSinglePlate_angle('lms', 'iron', 'err_d');
-dInc = aggregateSinglePlate_angle('lms', 'iron', 'inc');
+dInt = aggregateSinglePlate_angle(data_angle,'lms', 'iron', 'int');
+dErr = aggregateSinglePlate_angle(data_angle,'lms', 'iron', 'err_d');
+dInc = aggregateSinglePlate_angle(data_angle,'lms', 'iron', 'inc');
 
 dInt = dInt(dInt>0);
 dErr = dErr(dInt>0);
@@ -200,9 +200,9 @@ ylabel('error (m)');
 %% Steel angle
 
 figure;
-dInt = aggregateSinglePlate_angle('lms', 'steel', 'int');
-dErr = aggregateSinglePlate_angle('lms', 'steel', 'err_d');
-dInc = aggregateSinglePlate_angle('lms', 'steel', 'inc');
+dInt = aggregateSinglePlate_angle(data_angle,'lms', 'steel', 'int');
+dErr = aggregateSinglePlate_angle(data_angle,'lms', 'steel', 'err_d');
+dInc = aggregateSinglePlate_angle(data_angle,'lms', 'steel', 'inc');
 
 dInt = dInt(dInt>0);
 dErr = dErr(dInt>0);

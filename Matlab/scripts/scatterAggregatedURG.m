@@ -7,10 +7,10 @@ load '/home/cantor/Desktop/Robotique/matlab_scripts/data/data_distance.mat';
 % Distance
 figure;
 step = 15;
-dInt = aggregateData_distance('urg','indoor','int');
-dErr = aggregateData_distance('urg','indoor','err_d');
-dDist = aggregateData_distance('urg','indoor','d');
-%dInc = aggregateData_distance('urg','indoor','inc');
+dInt = aggregateData_distance(data_distance,'urg','indoor','int');
+dErr = aggregateData_distance(data_distance,'urg','indoor','err_d');
+dDist = aggregateData_distance(data_distance,'urg','indoor','d');
+%dInc = aggregateData_distance(data_distance,'urg','indoor','inc');
 
 dInt = dInt(1:step:end);
 dErr = dErr(1:step:end);

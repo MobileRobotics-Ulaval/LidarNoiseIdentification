@@ -12,10 +12,10 @@ load '/home/cantor/Desktop/Robotique/matlab_scripts/data/data_angle.mat';
 % Distance
 figure;
 step = 22;
-dInt = aggregateData_distance('lms','outdoor','int');
-dErr = aggregateData_distance('lms','outdoor','err_d');
-dDist = aggregateData_distance('lms','outdoor','d');
-%dInc = aggregateData_distance('lms','outdoor','inc');
+dInt = aggregateData_distance(data_distance,'lms','outdoor','int');
+dErr = aggregateData_distance(data_distance,'lms','outdoor','err_d');
+dDist = aggregateData_distance(data_distance,'lms','outdoor','d');
+%dInc = aggregateData_distance(data_distance,'lms','outdoor','inc');
 
 dInt = dInt(1:step:end);
 dErr = dErr(1:step:end);
@@ -50,9 +50,9 @@ ylabel('error (m)');
 figure;
 step = 10;
 
-aInt = aggregateData_angles('lms','int');
-aErr = aggregateData_angles('lms','err_d');
-aInc = aggregateData_angles('lms','inc');
+aInt = aggregateData_angles(data_angle,'lms','int');
+aErr = aggregateData_angles(data_angle,'lms','err_d');
+aInc = aggregateData_angles(data_angle,'lms','inc');
 
 aInt = aInt(1:step:end);
 aErr = aErr(1:step:end);
