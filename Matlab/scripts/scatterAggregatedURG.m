@@ -2,8 +2,7 @@
 %location = {'indoor', 'indoor'};
 %variable = {'d','err','inc','int','lat','lon','err_d'};
 
-% indoor pas dans le data_distance avec urg ?
-
+load '/home/cantor/Desktop/Robotique/matlab_scripts/data/data_distance.mat';
 
 % Distance
 figure;

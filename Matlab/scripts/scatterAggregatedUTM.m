@@ -1,6 +1,9 @@
-%variable = {'d','err','inc','int','lat','lon','err_d'};
+%% load data
 
-% Distance indoor
+load '/home/cantor/Desktop/Robotique/matlab_scripts/data/data_distance.mat';
+load '/home/cantor/Desktop/Robotique/matlab_scripts/data/data_angle.mat';
+
+%% Distance indoor
 figure;
 step = 18;
 dInt = aggregateData_distance('utm','indoor','int');

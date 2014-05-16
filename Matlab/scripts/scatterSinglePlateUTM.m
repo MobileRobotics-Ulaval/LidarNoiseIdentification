@@ -1,3 +1,8 @@
+%% load data
+
+load '/home/cantor/Desktop/Robotique/matlab_scripts/data/data_distance.mat';
+load '/home/cantor/Desktop/Robotique/matlab_scripts/data/data_angle.mat';
+
 %% board Distance
 
 dInt = aggregateSinglePlate_distance('utm', 'board', 'indoor', 'int');

@@ -1,3 +1,10 @@
+%% load data
+
+load '/home/cantor/Desktop/Robotique/matlab_scripts/data/data_distance.mat';
+load '/home/cantor/Desktop/Robotique/matlab_scripts/data/data_angle.mat';
+
+%%
+
 %sensor = {'urg', 'utm', 'lms'};
 %location = {'indoor', 'outdoor'};
 %variable = {'d','err','inc','int','lat','lon','err_d'};

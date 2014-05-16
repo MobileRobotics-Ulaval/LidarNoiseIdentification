@@ -1,3 +1,6 @@
+%% Generate data from distance dataset 
+% *** generateIDs_distance before ***
+
 sensor = {'urg','utm','lms'};
 location = {'indoor','outdoor'};
 plate = {'board', 'alu', 'steel', 'iron'};
@@ -13,6 +16,26 @@ for i = 1:length(sensor)
                    data = generatePoses_distance(data, sensor{i}, location{j}, plate{k}, dist{m}, false, false, .2, false);
                    
                 end
+            end
+        end
+    end
+end
+
+%% Generate data from angle dataset 
+% *** generateIDs_angle before ***
+
+sensor = {'utm','lms'};
+location = {'indoor'};
+plate = {'board', 'alu', 'steel', 'iron'};
+angle = {'a0', 'a15', 'a30', 'a45', 'a60', 'a75'};
+
+for i = 1:length(sensor)
+    for j = 1:length(location)
+        for k = 1:length(plate)
+            for m = 1:length(angle)
+                
+                   data = generatePoses_angle(data, sensor{i}, location{j}, plate{k}, angle{m}, false, false, .2, false);
+             
             end
         end
     end

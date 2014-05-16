@@ -3,7 +3,7 @@ function [x_hat, y_hat, z_hat, i] = correctScan(data, sensor, location, plate, d
 bagID = data.(sensor).(location).(plate).(dist).bagID;
 folder = data.(sensor).(location).folderName;
 
-loadPath = ['/Volumes/ASL-DATASET/datasets/laser3D/sensorReflectivities/', location, '/', folder, 'csv_local/cut_', num2str(bagID), '.csv'];
+loadPath = ['/home/cantor/Desktop/Robotique/sensorReflectivities/', location, '/', folder, 'csv_local/cut_', num2str(bagID), '.csv'];
 
 cutRaw = importdata(loadPath);
 
@@ -19,8 +19,8 @@ yaw = atan(y./x);
 theta = acos(z./d);
 
 % Correction model
-if sensor == 'utm'
-    d = d + 0.016.*exp(-((i-1277)./197).^2)+0.045*exp(-((i-2523)./1710).^2)+3.181e-06.*i-0.03;
+if strcmp(sensor,'utm')
+    d = d + -0.021.*exp(-((i-616.7)./409).^2)+0.02.*exp(-((i-2400)./800).^2)+4.892e-7.*i+0.00854;
 end
 
 x_hat = d.*sin(theta).*cos(yaw);

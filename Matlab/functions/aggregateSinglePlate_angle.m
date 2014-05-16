@@ -1,8 +1,8 @@
 function allData = aggregateSinglePlate_angle(sensor, plate, x)
 % Aggregates data of every angle for a chosen plate (angle dataset)
 
+% load '/home/cantor/Desktop/Robotique/matlab_scripts/data/data_angle.mat';
 
-load '/home/cantor/Desktop/Robotique/matlab_scripts/data/data_angle.mat';
 %sensor = {'utm', 'lms'};
 %variable = {'d','err','inc','int','lat','lon','err_d'};
 angle = {'a0', 'a15', 'a30', 'a45', 'a60', 'a75'};
