@@ -4,12 +4,10 @@ load '/home/cantor/Desktop/Robotique/matlab_scripts/data/data_distance.mat';
 load '/home/cantor/Desktop/Robotique/matlab_scripts/data/data_angle.mat';
 
 %% scatter all datasets (angle and distance)
-clear;
-clc;
 
-int = aggregateAllDatasets('lms', 'outdoor', 'int');
-err = aggregateAllDatasets('lms', 'outdoor', 'err_d');
-dist = aggregateAllDatasets('lms', 'outdoor', 'd');
+int = aggregateAllDatasets(data_distance, data_angle,'lms', 'outdoor', 'int');
+err = aggregateAllDatasets(data_distance, data_angle,'lms', 'outdoor', 'err_d');
+dist = aggregateAllDatasets(data_distance, data_angle,'lms', 'outdoor', 'd');
 
 % filters
 step = 20;
@@ -54,7 +52,7 @@ dist = dist(1:step:end);
 
 
 figure;
-edgeVector = [(0:50:150), (200:25:325), (340:12:500), 515, 525, 550, 575, 600, 615, 625, 650, 700, 750, 800, 900, (1000:200:max(int))];
+% edgeVector = [(0:50:150), (200:25:325), (340:12:500), 515, 525, 550, 575, 600, 615, 625, 650, 700, 750, 800, 900, (1000:200:max(int))];
 
 count = histc(int,edgeVector);
 bar(edgeVector, count, 'histc')
@@ -84,5 +82,7 @@ set(gca, 'XTick', (0:1000:max(int)));
 set(gca, 'Fontsize', 15);
 
 %% Regression Err vs Int
+% ***** A REFAIRE ******
+% -0.002286*exp(-((x-360)./74).^2)+0.0067*exp(-((x-525)./500).^2)+1.785e-5*x+0.008
 
 cftool('/home/cantor/Desktop/Robotique/matlab_scripts/regression/LMS_allDatasets_errVSint.sfit');

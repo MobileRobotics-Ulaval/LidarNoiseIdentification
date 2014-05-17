@@ -83,7 +83,7 @@ cftool('/home/cantor/Desktop/Robotique/matlab_scripts/regression/UTM_allDatasets
 
 
 %% test (with corrected data)
-
+figure;
 load '/home/cantor/Desktop/correctedDist.mat'
 
 int = aggregateData_distance(correctedData_dist,'utm', 'indoor', 'int');
@@ -110,7 +110,7 @@ plot(dx(:,1),dy(:,1),'--k')
 plot(dx(:,1),dy(:,2),'.-r')
 plot(dx(:,1),dy(:,3),'--k')  
 
-title('UTM indoor : color = distance', 'Fontsize', 15, 'Fontweight', 'demi')
+title('UTM indoor : color = incidence', 'Fontsize', 15, 'Fontweight', 'demi')
 xlabel('intensity','Fontsize',15, 'Fontweight', 'demi');
 ylabel('error (m)', 'Fontsize', 15, 'Fontweight', 'demi');
 set(gca, 'XTick', (0:1000:max(int)));

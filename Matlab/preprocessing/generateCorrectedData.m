@@ -1,4 +1,4 @@
-%% Generate corrected data from distance dataset 
+%% Generate corrected data from distance dataset
 % *** generateIDs_distance before ***
 
 % sensor = {'urg','utm','lms'};
