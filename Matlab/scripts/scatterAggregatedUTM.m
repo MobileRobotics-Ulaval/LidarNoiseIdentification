@@ -6,7 +6,7 @@ load '/home/cantor/Desktop/Robotique/matlab_scripts/data/data_angle.mat';
 
 %% Distance indoor
 figure;
-step = 18;
+step = 1;
 dInt = aggregateData_distance(data_distance,'utm','indoor','int');
 dErr = aggregateData_distance(data_distance,'utm','indoor','err_d');
 dDist = aggregateData_distance(data_distance,'utm','indoor','d');
@@ -35,7 +35,7 @@ ylim([-0.1, 0.1]);
 
 %% Distance outdoor
 figure;
-step = 18;
+step = 1;
 dInt = aggregateData_distance(data_distance,'utm','outdoor','int');
 dErr = aggregateData_distance(data_distance,'utm','outdoor','err_d');
 dDist = aggregateData_distance(data_distance,'utm','outdoor','d');
@@ -66,7 +66,7 @@ ylim([-0.1, 0.1]);
 %%
 %Angles
 figure;
-step = 10;
+step = 1;
 
 aInt = aggregateData_angles(data_angle,'utm','int');
 aErr = aggregateData_angles(data_angle,'utm','err_d');

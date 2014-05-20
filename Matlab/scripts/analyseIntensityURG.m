@@ -1,15 +1,14 @@
 %% load data
-
-load '/home/cantor/Desktop/Robotique/matlab_scripts/data/data_distance.mat';
-load '/home/cantor/Desktop/Robotique/matlab_scripts/data/data_angle.mat';
-
-%% scatter distance (no angle data)
 clear;
 clc;
 
-int = aggregateData_distance('urg', 'indoor', 'int');
-err = aggregateData_distance('urg', 'indoor', 'err_d');
-dist = aggregateData_distance('urg', 'indoor', 'd');
+load '/home/cantor/Desktop/Robotique/matlab_scripts/data/data_distance.mat';
+
+%% scatter distance (no angle data)
+
+int = aggregateData_distance(data_distance,'urg', 'indoor', 'int');
+err = aggregateData_distance(data_distance,'urg', 'indoor', 'err_d');
+dist = aggregateData_distance(data_distance,'urg', 'indoor', 'd');
 
 % filters
 step = 20;

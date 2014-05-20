@@ -5,7 +5,7 @@ load '/home/cantor/Desktop/Robotique/matlab_scripts/data/data_distance.mat';
 load '/home/cantor/Desktop/Robotique/matlab_scripts/data/data_angle.mat';
 
 %% board Distance
-
+figure;
 dInt = aggregateSinglePlate_distance(data_distance,'utm', 'board', 'indoor', 'int');
 dErr = aggregateSinglePlate_distance(data_distance,'utm', 'board', 'indoor', 'err_d');
 dDist = aggregateSinglePlate_distance(data_distance,'utm', 'board', 'indoor', 'd');
@@ -16,7 +16,7 @@ dErr = dErr(dInt>0);
 dDist = dDist(dInt>0);
 %dInc = dInc(dInt>0);
 
-step = 10;
+step = 1;
 
 hold on;
 scatter(dInt(1:step:end), dErr(1:step:end), 4, dDist(1:step:end));
@@ -44,7 +44,7 @@ dErr = dErr(dInt>0);
 dDist = dDist(dInt>0);
 %dInc = dInc(dInt>0);
 
-step = 10;
+step = 1;
 
 hold on;
 scatter(dInt(1:step:end), dErr(1:step:end), 4, dDist(1:step:end));
@@ -72,7 +72,7 @@ dErr = dErr(dInt>0);
 dDist = dDist(dInt>0);
 %dInc = dInc(dInt>0);
 
-step = 10;
+step = 1;
 
 hold on;
 scatter(dInt(1:step:end), dErr(1:step:end), 4, dDist(1:step:end));
@@ -101,7 +101,7 @@ dErr = dErr(dInt>0);
 dDist = dDist(dInt>0);
 %dInc = dInc(dInt>0);
 
-step = 10;
+step = 1;
 
 hold on;
 scatter(dInt(1:step:end), dErr(1:step:end), 4, dDist(1:step:end));
@@ -117,6 +117,7 @@ ylabel('error (m)');
 %xlim([0, 14000]);
 
 %% Board angle
+figure;
 
 dInt = aggregateSinglePlate_angle(data_angle,'utm', 'board', 'int');
 dErr = aggregateSinglePlate_angle(data_angle,'utm', 'board', 'err_d');
@@ -126,7 +127,7 @@ dInt = dInt(dInt>0);
 dErr = dErr(dInt>0);
 dInc = dInc(dInt>0);
 
-step = 10;
+step = 1;
 
 hold on;
 scatter(dInt(1:step:end), dErr(1:step:end), 4, dInc(1:step:end));
@@ -143,6 +144,7 @@ ylabel('error (m)');
 
 
 %% Alu angle
+figure;
 
 dInt = aggregateSinglePlate_angle(data_angle,'utm', 'alu', 'int');
 dErr = aggregateSinglePlate_angle(data_angle,'utm', 'alu', 'err_d');
@@ -152,7 +154,7 @@ dInt = dInt(dInt>0);
 dErr = dErr(dInt>0);
 dInc = dInc(dInt>0);
 
-step = 10;
+step = 1;
 
 hold on;
 scatter(dInt(1:step:end), dErr(1:step:end), 4, dInc(1:step:end));
@@ -169,6 +171,7 @@ ylabel('error (m)');
 
 
 %% Iron angle
+figure;
 
 dInt = aggregateSinglePlate_angle(data_angle,'utm', 'iron', 'int');
 dErr = aggregateSinglePlate_angle(data_angle,'utm', 'iron', 'err_d');
@@ -178,7 +181,7 @@ dInt = dInt(dInt>0);
 dErr = dErr(dInt>0);
 dInc = dInc(dInt>0);
 
-step = 10;
+step = 1;
 
 hold on;
 scatter(dInt(1:step:end), dErr(1:step:end), 4, dInc(1:step:end));
@@ -196,6 +199,7 @@ ylabel('error (m)');
 
 
 %% Steel angle
+figure;
 
 dInt = aggregateSinglePlate_angle(data_angle,'utm', 'steel', 'int');
 dErr = aggregateSinglePlate_angle(data_angle,'utm', 'steel', 'err_d');
@@ -205,7 +209,7 @@ dInt = dInt(dInt>0);
 dErr = dErr(dInt>0);
 dInc = dInc(dInt>0);
 
-step = 10;
+step = 1;
 
 hold on;
 scatter(dInt(1:step:end), dErr(1:step:end), 4, dInc(1:step:end));

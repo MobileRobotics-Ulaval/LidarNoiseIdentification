@@ -1,4 +1,6 @@
 %% load data
+clear;
+clc;
 
 load '/home/cantor/Desktop/Robotique/matlab_scripts/data/data_distance.mat';
 load '/home/cantor/Desktop/Robotique/matlab_scripts/data/data_angle.mat';
@@ -8,18 +10,22 @@ load '/home/cantor/Desktop/Robotique/matlab_scripts/data/data_angle.mat';
 int = aggregateAllDatasets(data_distance, data_angle,'lms', 'outdoor', 'int');
 err = aggregateAllDatasets(data_distance, data_angle,'lms', 'outdoor', 'err_d');
 dist = aggregateAllDatasets(data_distance, data_angle,'lms', 'outdoor', 'd');
+%inc = aggregateAllDatasets(data_distance, data_angle,'lms', 'outdoor', 'inc');
 
 % filters
 step = 20;
 int = int(int>0);
 err = err(int>0);
 dist = dist(int>0);
+%inc = inc(int>0);
 int = int(int<2000);
 err = err(int<2000);
 dist = dist(int<2000);
+%inc = inc(int<2000);
 int = int(1:step:end);
 err = err(1:step:end);
 dist = dist(1:step:end);
+%inc = inc(1:step:end);
 
 scatter(int, err, 4, dist);
 
@@ -34,9 +40,9 @@ ylim([-0.4, 0.2]);
 
 %% Histogram
 
-int = aggregateAllDatasets('lms', 'outdoor', 'int');
-err = aggregateAllDatasets('lms', 'outdoor', 'err_d');
-dist = aggregateAllDatasets('lms', 'outdoor', 'd');
+int = aggregateAllDatasets(data_distance, data_angle,'lms', 'outdoor', 'int');
+err = aggregateAllDatasets(data_distance, data_angle,'lms', 'outdoor', 'err_d');
+dist = aggregateAllDatasets(data_distance, data_angle,'lms', 'outdoor', 'd');
 
 % filters
 step = 1;
@@ -50,9 +56,8 @@ int = int(1:step:end);
 err = err(1:step:end);
 dist = dist(1:step:end);
 
-
 figure;
-% edgeVector = [(0:50:150), (200:25:325), (340:12:500), 515, 525, 550, 575, 600, 615, 625, 650, 700, 750, 800, 900, (1000:200:max(int))];
+edgeVector = [(0:50:150), (200:25:325), (340:12:500), 515, 525, 550, 575, 600, 615, 625, 650, 700, 750, 800, 900, (1000:200:max(int))];
 
 count = histc(int,edgeVector);
 bar(edgeVector, count, 'histc')
