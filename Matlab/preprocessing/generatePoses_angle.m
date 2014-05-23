@@ -15,8 +15,9 @@ folder = data.(sensor).(location).folderName;
 
 [x, y, z] = fetchMesh(plateIDs, indoorRaw);
 T = fetchTransformation(laserIDs, indoorRaw);
-
 [x2, y2, z2] = transformMesh(T, x, y, z);
+
+T2 = plateFrameTransform(x2, y2, z2);
 
 % Load scanned points
 
@@ -41,6 +42,8 @@ if ~exist(savePath, 'file') || corrData || forceRecompute
     % Compute normal VS estimated normal
     tree = kdtree_build([lx, ly, lz]);
     est_n  = zeros(length(lx), 3);
+    
+    [px, py, pz] = transformToPlateRef(T2, lx, ly, lz);
     
     for j = 1:size(lx)
         p = [lx(j), ly(j), lz(j)];
@@ -114,11 +117,14 @@ if ~exist(savePath, 'file') || corrData || forceRecompute
     result(:,9) = lon(f);
     result(:,10) = errors_depth(f);
     result(:,11) = errors_est_n(f);
+    result(:,12) = px(f);
+    result(:,13) = py(f);
+    result(:,14) = pz(f);
     
     if ~(corrData || forceRecompute)
         fid = fopen(savePath, 'w');
-        fprintf(fid, 'x, y, z, error_plane, clusterID, intensity, incidence, lattitude, longitude, error_depth, error_est_n\n');
-        fprintf(fid, '%f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f\n', result');
+        fprintf(fid, 'x, y, z, error_plane, clusterID, intensity, incidence, lattitude, longitude, error_depth, error_est_n, px, py, pz\n');
+        fprintf(fid, '%f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f\n', result');
     end
 
 else
@@ -139,6 +145,9 @@ lattitude = 8;
 longitude = 9;
 err_d = 10;
 err_n = 11;
+px = 12;
+py = 13;
+pz = 14;
 
 data.(sensor).(location).(plate).(angle).result.d = sqrt(result(:, x).^2+result(:, y).^2+result(:, z).^2);
 data.(sensor).(location).(plate).(angle).result.err = result(:, err);
@@ -147,5 +156,8 @@ data.(sensor).(location).(plate).(angle).result.int = result(:, int);
 data.(sensor).(location).(plate).(angle).result.lat = result(:, lattitude);
 data.(sensor).(location).(plate).(angle).result.lon = result(:, longitude);
 data.(sensor).(location).(plate).(angle).result.err_d = result(:, err_d);
-%data.(sensor).(location).(plate).(angle).result.err_n = result(:, err_n);
+data.(sensor).(location).(plate).(angle).result.err_n = result(:, err_n);
+data.(sensor).(location).(plate).(angle).result.px = result(:, px);
+data.(sensor).(location).(plate).(angle).result.py = result(:, py);
+data.(sensor).(location).(plate).(angle).result.pz = result(:, pz);
 
