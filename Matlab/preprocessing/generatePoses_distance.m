@@ -114,7 +114,7 @@ if ~exist(savePath, 'file') || corrData || forceRecompute
     result(:,9) = lon(f);
     result(:,10) = errors_depth(f);
     result(:,11) = errors_est_n(f);
-    
+        
     if ~(corrData || forceRecompute)
         fid = fopen(savePath, 'w');
         fprintf(fid, 'x, y, z, error_plane, clusterID, intensity, incidence, lattitude, longitude, error_depth, error_est_n\n');
