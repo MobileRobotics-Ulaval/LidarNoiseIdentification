@@ -10,26 +10,30 @@ step = 1;
 dInt = aggregateData_distance(data_distance,'utm','indoor','int');
 dErr = aggregateData_distance(data_distance,'utm','indoor','err_d');
 dDist = aggregateData_distance(data_distance,'utm','indoor','d');
+dInc = aggregateData_distance(data_distance,'utm','indoor','inc');
 
 dInt = dInt(1:step:end);
 dErr = dErr(1:step:end);
 dDist = dDist(1:step:end);
+dInc = dInc(1:step:end);
 
 dInt = dInt(dInt>0);
 dErr = dErr(dInt>0);
 dDist = dDist(dInt>0);
+dInc = dInc(dInt>0);
 
 scatter(dInt, dErr, 4, dDist);
+%scatter(dInt, dInc, 4, dErr);
 hold on;
 [dx, dy, dw] = statsPerBin(dInt, dErr, 100);
 plot(dx(:,1),dy(:,1),'--k')
 plot(dx(:,1),dy(:,2),'.k')
 plot(dx(:,1),dy(:,3),'--k')  
 
-title('Indoor : color = distance')
-xlabel('intensity');
-ylabel('error (m)');
-ylim([-0.1, 0.1]);
+% title('Indoor : color = distance')
+% xlabel('intensity');
+% ylabel('error (m)');
+%ylim([-0.1, 0.1]);
 %xlim([0, 14000]);
 
 
@@ -80,15 +84,44 @@ aInc = aInc(1:step:end);
 
 
 hold on;
-scatter(aInt(aInt>0), aErr(aInt>0), 4, aInc(aInt>0));
-[ax, ay, aw] = statsPerBin(aInt(aInt>0), aErr(aInt>0), 50);
-plot(ax(:,1),ay(:,1),'--k')
-plot(ax(:,1),ay(:,2),'.k')
-plot(ax(:,1),ay(:,3),'--k') 
+%scatter(aInt(aInt>0), aErr(aInt>0), 4, aInc(aInt>0));
+scatter(aInt(aInt>0), aInc(aInt>0), 4, aErr(aInt>0));
+% [ax, ay, aw] = statsPerBin(aInt(aInt>0), aErr(aInt>0), 50);
+% plot(ax(:,1),ay(:,1),'--k')
+% plot(ax(:,1),ay(:,2),'.k')
+% plot(ax(:,1),ay(:,3),'--k') 
 
-title('Indoor : color = incidence')
-xlabel('intensity');
-ylabel('error (m)');
-ylim([-0.1, 0.2]);
+% title('Indoor : color = incidence')
+% xlabel('intensity');
+% ylabel('error (m)');
+%ylim([-0.1, 0.2]);
 %xlim([0, 14000]);
 
+%% test
+figure;
+step = 1;
+
+aInt = aggregateData_angles(data,'utm','int');
+aErr = aggregateData_angles(data,'utm','err_d');
+%aDist = aggregateData_angles(data,'utm','d');
+aInc = aggregateData_angles(data,'utm','inc');
+
+aInt = aInt(1:step:end);
+aErr = aErr(1:step:end);
+%aDist = aDist(1:step:end);
+aInc = aInc(1:step:end);
+
+
+hold on;
+%scatter(aInt(aInt>0), aErr(aInt>0), 4, aInc(aInt>0));
+scatter(aInt(aInt>0), aInc(aInt>0), 4, aErr(aInt>0));
+% [ax, ay, aw] = statsPerBin(aInt(aInt>0), aErr(aInt>0), 50);
+% plot(ax(:,1),ay(:,1),'--k')
+% plot(ax(:,1),ay(:,2),'.k')
+% plot(ax(:,1),ay(:,3),'--k') 
+
+% title('Indoor : color = incidence')
+% xlabel('intensity');
+% ylabel('error (m)');
+%ylim([-0.1, 0.2]);
+%xlim([0, 14000]);

@@ -1,10 +1,20 @@
-function [x_hat, y_hat, z_hat, i] = correctScan(data, sensor, location, plate, dist, plotData)
+function [x_hat, y_hat, z_hat, int] = correctScan(data, sensor, location, plate, dist, plotData)
+
+
 
 bagID = data.(sensor).(location).(plate).(dist).bagID;
 folder = data.(sensor).(location).folderName;
 
-loadPath = ['/home/cantor/Desktop/Robotique/sensorReflectivities/', location, '/', folder, 'csv_local/cut_', num2str(bagID), '.csv'];
+dataType = dist(1);
+dataType = char(dataType);
+dataType = dataType(1);
 
+if strcmp('d', dataType) % distance dataset
+    loadPath = ['/home/cantor/Desktop/Robotique/sensorReflectivities/', location, '/', folder, 'csv_local/cut_', num2str(bagID), '.csv'];
+elseif strcmp('a', dataType) % angle dataset
+    loadPath = ['/home/cantor/Desktop/Robotique/sensorReflectivities/angles/', folder, 'csv_local/cut_', num2str(bagID), '.csv'];
+end 
+    
 cutRaw = importdata(loadPath);
 
 x = cutRaw.data(:,strcmp('"Points:0"', cutRaw.colheaders));
@@ -12,7 +22,7 @@ y = cutRaw.data(:,strcmp('"Points:1"', cutRaw.colheaders));
 z = cutRaw.data(:,strcmp('"Points:2"', cutRaw.colheaders));
 
 
-i = cutRaw.data(:,strcmp('"Intensities"', cutRaw.colheaders));
+int = cutRaw.data(:,strcmp('"Intensities"', cutRaw.colheaders));
 
 d = sqrt(x.^2+y.^2+z.^2);
 yaw = atan(y./x);
@@ -20,7 +30,10 @@ theta = acos(z./d);
 
 % Correction model
 if strcmp(sensor,'utm')
-    d = d + -0.021.*exp(-((i-616.7)./409).^2)+0.02.*exp(-((i-2400)./800).^2)+4.892e-7.*i+0.00854;
+load '/home/cantor/Desktop/Robotique/matlab_scripts/data/utm_medInt.mat';
+load '/home/cantor/Desktop/Robotique/matlab_scripts/data/utm_medErr.mat';
+    correction = correctionFunction(medInt,medErr, int);
+    d = d + correction;
 end
 
 x_hat = d.*sin(theta).*cos(yaw);

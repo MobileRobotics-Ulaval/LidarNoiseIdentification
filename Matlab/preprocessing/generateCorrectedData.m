@@ -1,5 +1,6 @@
 %% Generate corrected data from distance dataset
-% *** generateIDs_distance before ***
+
+% ****************** generateIDs_distance before ***********************
 
 % sensor = {'urg','utm','lms'};
 % location = {'indoor','outdoor'};
@@ -25,7 +26,8 @@ for i = 1:length(sensor)
 end
 
 %% Generate corrected data from angle dataset 
-% *** generateIDs_angle before ***
+
+% ****************** generateIDs_angle before ***********************
 
 % sensor = {'urg','utm','lms'};
 sensor = {'utm'};
