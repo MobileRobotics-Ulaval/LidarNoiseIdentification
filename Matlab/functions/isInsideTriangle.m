@@ -1,6 +1,5 @@
 function [inside, err_n, err_d, n] = isInsideTriangle(s1, s2, s3, p)
 
-% bug : retourne inside = 1 parfois quand ce n'est pas le cas
 
 % Compute vectors        
 v0 = s3 - s1;
