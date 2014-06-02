@@ -38,24 +38,24 @@ if ~exist(savePath, 'file') || corrData || forceRecompute
     end
     
     
-    % Compute normal VS estimated normal
-    tree = kdtree_build([lx, ly, lz]);
-    est_n  = zeros(length(lx), 3);
-    
-    for j = 1:size(lx)
-        p = [lx(j), ly(j), lz(j)];
-        [idxs, dists] = kdtree_ball_query(tree, p, qradii);
-        if length(idxs) > 4
-            closePts = [lx(idxs), ly(idxs), lz(idxs)];
-            c = mean(closePts);
-            closePts = [closePts(:,1) - c(1), closePts(:,2) - c(2), closePts(:,3) - c(3)];
-            [eigVec, eigVal] = eig(closePts'*closePts);
-            eigVal = diag(eigVal);
-            est_n(j,:) = eigVec(:, eigVal == min(eigVal));
-        else
-            est_n(j,:) = [0;0;0];
-        end
-    end
+%     % Compute normal VS estimated normal
+%     tree = kdtree_build([lx, ly, lz]);
+%     est_n  = zeros(length(lx), 3);
+%     
+%     for j = 1:size(lx)
+%         p = [lx(j), ly(j), lz(j)];
+%         [idxs, dists] = kdtree_ball_query(tree, p, qradii);
+%         if length(idxs) > 4
+%             closePts = [lx(idxs), ly(idxs), lz(idxs)];
+%             c = mean(closePts);
+%             closePts = [closePts(:,1) - c(1), closePts(:,2) - c(2), closePts(:,3) - c(3)];
+%             [eigVec, eigVal] = eig(closePts'*closePts);
+%             eigVal = diag(eigVal);
+%             est_n(j,:) = eigVec(:, eigVal == min(eigVal));
+%         else
+%             est_n(j,:) = [0;0;0];
+%         end
+%     end
                 
     clusterID = zeros(size(lx));
     errors_normal = zeros(size(lx));
@@ -89,11 +89,11 @@ if ~exist(savePath, 'file') || corrData || forceRecompute
                 nn = nn ./ norm(nn);
                 lon(j) = acos(dot(pp,nn));
                 
-                if dot(n, est_n(j,:)) < 0
-                    n = -n;
-                end
-                
-                errors_est_n(j) = acos(dot(n, est_n(j,:)));
+%                 if dot(n, est_n(j,:)) < 0
+%                     n = -n;
+%                 end
+%                 
+%                 errors_est_n(j) = acos(dot(n, est_n(j,:)));
                 
                 
                 
@@ -148,4 +148,52 @@ data.(sensor).(location).(plate).(dist).result.lat = result(:, lattitude);
 data.(sensor).(location).(plate).(dist).result.lon = result(:, longitude);
 data.(sensor).(location).(plate).(dist).result.err_d = result(:, err_d);
 %data.(sensor).(location).(plate).(dist).result.err_n = result(:, err_n);
+
+  % compute area of ellipse at the intersection of the
+                % laser beam cone and the plate
+              
+                
+% 
+%                                                           A'_,-'
+%                                                         _,-|
+%                                                   A _,-'   |
+%                                                 _,o'       |
+%                                             _,-'   \       |
+%                                         _,-'        \      |b
+%                                     _,-'             \ x   |
+%                                 _,-'                  \    |
+%                             _,-'                       \   |
+%                         _,-'alpha                  beta \B |B"
+%              Source S o----------------------------------o-o---------
+%                         `-. alpha         d       (y-x)/2 \|w
+%                             `-._                           o B'
+%                                 `-._                       |\
+%                                     `-._                   | \
+%                                         `-._           b-w |  \
+%                                             `-._           |   \ (y+x)/2
+%                                                 `-._       |    \
+%                                                     `-._   |     \
+%                                                         `-.|      \
+%                                                           C'`-._   \
+%                                                                 `-._\
+%                                                                     `o
+%  http://mathforum.org/library/drmath/view/55260.html                  C
+
+if sensor == 'utm'
+   
+   d = data.(sensor).(location).(plate).(dist).result.d;
+   err_d = data.(sensor).(location).(plate).(dist).result.err_d;
+   h = d + err_d;
+   inc = data.(sensor).(location).(plate).(dist).result.inc;
+   alpha = 0.0012217;
+   beta = pi/2 - inc;
+   x = h.*sin(alpha)./sin(beta+alpha);
+   y = h.*sin(alpha)./sin(beta-alpha);
+   semiMajorAxis = (x+y)./2;
+   semiMinorAxis = (x+y).*sin(beta-alpha)./(2.*cos(alpha)) + (y-x).*sin(beta)./2;
+   
+   data.(sensor).(location).(plate).(dist).result.beamArea = pi.*semiMajorAxis.*semiMinorAxis;
+end
+
+clear d x y inc alpha beta semiMajorAxis semiMinorAxis
 
