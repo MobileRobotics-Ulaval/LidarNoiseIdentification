@@ -117,47 +117,8 @@ set(gca, 'Fontsize', 15);
 
 ylim([-0.15, 0.2]);
 
+
 %% test analyse incidence
-
-figure;
-
-int = aggregateAllDatasets(utm_corrDist, utm_corrAngle, 'utm', 'indoor', 'int');
-err = aggregateAllDatasets(utm_corrDist, utm_corrAngle,'utm', 'indoor', 'err_d');
-dist = aggregateAllDatasets(utm_corrDist, utm_corrAngle,'utm', 'indoor', 'd');
-inc = aggregateAllDatasets(utm_corrDist, utm_corrAngle,'utm', 'indoor', 'inc');
-
-% filters
-step = 10;
-int = int(int>0);
-err = err(int>0);
-inc = inc(int>0);
-dist = dist(int>0);
-int = int(1:step:end);
-err = err(1:step:end);
-dist = dist(1:step:end);
-inc = inc(1:step:end);
-
-scatter3(inc, err, 4, int);
-hold on;
-[dx, dy, dw] = statsPerBin(inc, err, 100);
-plot(dx(:,1),dy(:,1),'--k')
-plot(dx(:,1),dy(:,2),'.k')
-plot(dx(:,1),dy(:,3),'--k')  
-
-medInc = dx(:,1);
-medInt = dy(:,2);
-
-title('UTM (int corrected) indoor : color = error depth', 'Fontsize', 15, 'Fontweight', 'demi')
-xlabel('incidence','Fontsize',15, 'Fontweight', 'demi');
-ylabel('error (m)', 'Fontsize', 15, 'Fontweight', 'demi');
-%set(gca, 'XTick', (0:1000:max(int)));
-set(gca, 'Fontsize', 15);
-
-%ylim([-0.1, 0.1]);
-
-
-
-%% test 2 analyse incidence
 
 figure;
 
@@ -189,7 +150,7 @@ medInt = dy(:,2);
 
 title('UTM (int corrected) indoor : color = error depth', 'Fontsize', 15, 'Fontweight', 'demi')
 xlabel('intensity','Fontsize',15, 'Fontweight', 'demi');
-ylabel('error (m)', 'Fontsize', 15, 'Fontweight', 'demi');
+ylabel('incidence (rad)', 'Fontsize', 15, 'Fontweight', 'demi');
 %set(gca, 'XTick', (0:1000:max(int)));
 set(gca, 'Fontsize', 15);
 

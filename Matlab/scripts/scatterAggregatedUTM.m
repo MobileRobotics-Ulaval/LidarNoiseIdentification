@@ -3,29 +3,38 @@ clear;
 clc;
 load '/home/cantor/Desktop/Robotique/matlab_scripts/data/data_distance.mat';
 load '/home/cantor/Desktop/Robotique/matlab_scripts/data/data_angle.mat';
+load '/home/cantor/Desktop/Robotique/matlab_scripts/data/utm_corrAngle.mat';
+load '/home/cantor/Desktop/Robotique/matlab_scripts/data/utm_corrDist.mat';
+
 
 %% Distance indoor
 figure;
 step = 1;
-dInt = aggregateData_distance(data_distance,'utm','indoor','int');
-dErr = aggregateData_distance(data_distance,'utm','indoor','err_d');
-dDist = aggregateData_distance(data_distance,'utm','indoor','d');
-dInc = aggregateData_distance(data_distance,'utm','indoor','inc');
+dataset = utm_corrDist;
+% dataset = data_distance;
+dInt = aggregateData_distance(dataset,'utm','indoor','int');
+dErr = aggregateData_distance(dataset,'utm','indoor','err_d');
+dDist = aggregateData_distance(dataset,'utm','indoor','d');
+dInc = aggregateData_distance(dataset,'utm','indoor','inc');
+dArea = aggregateData_distance(dataset,'utm','indoor','beamArea');
 
-dInt = dInt(1:step:end);
-dErr = dErr(1:step:end);
-dDist = dDist(1:step:end);
-dInc = dInc(1:step:end);
 
 dInt = dInt(dInt>0);
 dErr = dErr(dInt>0);
 dDist = dDist(dInt>0);
 dInc = dInc(dInt>0);
+dArea = dArea(dInt>0);
 
-scatter(dInt, dErr, 4, dDist);
+dInt = dInt(1:step:end);
+dErr = dErr(1:step:end);
+dDist = dDist(1:step:end);
+dInc = dInc(1:step:end);
+dArea = dArea(1:step:end);
+
+scatter(dArea, dErr, 4, dDist);
 %scatter(dInt, dInc, 4, dErr);
 hold on;
-[dx, dy, dw] = statsPerBin(dInt, dErr, 100);
+[dx, dy, dw] = statsPerBin(dArea, dErr, 100);
 plot(dx(:,1),dy(:,1),'--k')
 plot(dx(:,1),dy(:,2),'.k')
 plot(dx(:,1),dy(:,3),'--k')  
@@ -39,10 +48,12 @@ plot(dx(:,1),dy(:,3),'--k')
 
 %% Distance outdoor
 figure;
+dataset = utm_corrAngle;
+% dataset = data_angle;
 step = 1;
-dInt = aggregateData_distance(data_distance,'utm','outdoor','int');
-dErr = aggregateData_distance(data_distance,'utm','outdoor','err_d');
-dDist = aggregateData_distance(data_distance,'utm','outdoor','d');
+dInt = aggregateData_distance(dataset,'utm','outdoor','int');
+dErr = aggregateData_distance(dataset,'utm','outdoor','err_d');
+dDist = aggregateData_distance(dataset,'utm','outdoor','d');
 
 dInt = dInt(1:step:end);
 dErr = dErr(1:step:end);
@@ -71,57 +82,34 @@ ylim([-0.1, 0.1]);
 %Angles
 figure;
 step = 1;
+dataset = utm_corrAngle;
+%  dataset = data_angle;
 
-aInt = aggregateData_angles(data_angle,'utm','int');
-aErr = aggregateData_angles(data_angle,'utm','err_d');
-%aDist = aggregateData_angles(data_angle,'utm','d');
-aInc = aggregateData_angles(data_angle,'utm','inc');
-
+aInt = aggregateData_angles(dataset,'utm','int');
+aErr = aggregateData_angles(dataset,'utm','err_d');
+%aDist = aggregateData_angles(dataset,'utm','d');
+aInc = aggregateData_angles(dataset,'utm','inc');
+aArea = aggregateData_angles(dataset,'utm','beamArea');
 aInt = aInt(1:step:end);
 aErr = aErr(1:step:end);
 %aDist = aDist(1:step:end);
 aInc = aInc(1:step:end);
+aArea = aArea(1:step:end);
+aInt = aInt(aInt>0);
+aErr = aErr(aInt>0);
+aInc = aInc(aInt>0);
+aArea = aArea(aInt>0);
 
 
 hold on;
-%scatter(aInt(aInt>0), aErr(aInt>0), 4, aInc(aInt>0));
-scatter(aInt(aInt>0), aInc(aInt>0), 4, aErr(aInt>0));
-% [ax, ay, aw] = statsPerBin(aInt(aInt>0), aErr(aInt>0), 50);
+scatter(aArea, aErr, 4, aInc);
+[ax, ay, aw] = statsPerBin(aArea, aErr, 50);
 % plot(ax(:,1),ay(:,1),'--k')
-% plot(ax(:,1),ay(:,2),'.k')
+plot(ax(:,1),ay(:,2),'.k')
 % plot(ax(:,1),ay(:,3),'--k') 
 
-% title('Indoor : color = incidence')
-% xlabel('intensity');
-% ylabel('error (m)');
-%ylim([-0.1, 0.2]);
-%xlim([0, 14000]);
-
-%% test
-figure;
-step = 1;
-
-aInt = aggregateData_angles(data,'utm','int');
-aErr = aggregateData_angles(data,'utm','err_d');
-%aDist = aggregateData_angles(data,'utm','d');
-aInc = aggregateData_angles(data,'utm','inc');
-
-aInt = aInt(1:step:end);
-aErr = aErr(1:step:end);
-%aDist = aDist(1:step:end);
-aInc = aInc(1:step:end);
-
-
-hold on;
-%scatter(aInt(aInt>0), aErr(aInt>0), 4, aInc(aInt>0));
-scatter(aInt(aInt>0), aInc(aInt>0), 4, aErr(aInt>0));
-% [ax, ay, aw] = statsPerBin(aInt(aInt>0), aErr(aInt>0), 50);
-% plot(ax(:,1),ay(:,1),'--k')
-% plot(ax(:,1),ay(:,2),'.k')
-% plot(ax(:,1),ay(:,3),'--k') 
-
-% title('Indoor : color = incidence')
-% xlabel('intensity');
-% ylabel('error (m)');
-%ylim([-0.1, 0.2]);
-%xlim([0, 14000]);
+title('Indoor : color = incidence')
+xlabel('intensity');
+ylabel('error (m)');
+% ylim([-0.1, 0.2]);
+% xlim([0, 14000]);
