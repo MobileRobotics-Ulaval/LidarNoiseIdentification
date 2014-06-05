@@ -2,7 +2,6 @@ clear;
 clc;
 load '/home/cantor/Desktop/Robotique/matlab_scripts/data/data_angle.mat';
 load '/home/cantor/Desktop/Robotique/matlab_scripts/data/utm_corrAngle.mat';
-load '/home/cantor/Desktop/corrAngleWithArea.mat'
 
 %% UTM indoor alu : error vs incidence
 

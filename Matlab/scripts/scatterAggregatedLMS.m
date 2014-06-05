@@ -3,15 +3,10 @@
 load '/home/cantor/Desktop/Robotique/matlab_scripts/data/data_distance.mat';
 load '/home/cantor/Desktop/Robotique/matlab_scripts/data/data_angle.mat';
 
-%%
+%% LMS outdoor distance
 
-%sensor = {'urg', 'utm', 'lms'};
-%location = {'indoor', 'outdoor'};
-%variable = {'d','err','inc','int','lat','lon','err_d'};
-
-% Distance
 figure;
-step = 22;
+step = 1;
 dInt = aggregateData_distance(data_distance,'lms','outdoor','int');
 dErr = aggregateData_distance(data_distance,'lms','outdoor','err_d');
 dDist = aggregateData_distance(data_distance,'lms','outdoor','d');
@@ -45,10 +40,10 @@ ylabel('error (m)');
 %ylim([-0.1, 0.1]);
 %xlim([0, 14000]);
 
-%%
-%Angles
+%% LMS indoor angle
+
 figure;
-step = 10;
+step = 1;
 
 aInt = aggregateData_angles(data_angle,'lms','int');
 aErr = aggregateData_angles(data_angle,'lms','err_d');

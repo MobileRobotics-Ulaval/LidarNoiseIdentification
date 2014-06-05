@@ -31,9 +31,9 @@ set(gca, 'Fontsize', 15);
 
 %% Histogram
 
-int = aggregateData_distance('urg', 'indoor', 'int');
-err = aggregateData_distance('urg', 'indoor', 'err_d');
-dist = aggregateData_distance('urg', 'indoor', 'd');
+int = aggregateData_distance(data_distance, 'urg', 'indoor', 'int');
+err = aggregateData_distance(data_distance, 'urg', 'indoor', 'err_d');
+dist = aggregateData_distance(data_distance, 'urg', 'indoor', 'd');
 
 % filters
 step = 20;

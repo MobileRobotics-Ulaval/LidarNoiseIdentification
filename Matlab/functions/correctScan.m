@@ -1,7 +1,5 @@
 function [x_hat, y_hat, z_hat, int] = correctScan(data, sensor, location, plate, dist, plotData)
 
-
-
 bagID = data.(sensor).(location).(plate).(dist).bagID;
 folder = data.(sensor).(location).folderName;
 
@@ -29,10 +27,17 @@ yaw = atan(y./x);
 theta = acos(z./d);
 
 % Correction model
+
+
 if strcmp(sensor,'utm')
-load '/home/cantor/Desktop/Robotique/matlab_scripts/data/utm_medInt.mat';
-load '/home/cantor/Desktop/Robotique/matlab_scripts/data/utm_medErr.mat';
-    correction = correctionFunction(medInt,medErr, int);
+    load '/home/cantor/Desktop/Robotique/matlab_scripts/data/utm_medInt.mat';
+    load '/home/cantor/Desktop/Robotique/matlab_scripts/data/utm_medErr.mat';
+    correction = correctionFunction(utm_medInt, utm_medErr, int);
+    d = d + correction;
+elseif strcmp(sensor, 'lms')
+    load '/home/cantor/Desktop/Robotique/matlab_scripts/data/lms_medInt.mat';
+    load '/home/cantor/Desktop/Robotique/matlab_scripts/data/lms_medErr.mat';
+    correction = correctionFunction(lms_medInt, lms_medErr, int);
     d = d + correction;
 end
 

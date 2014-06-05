@@ -320,12 +320,12 @@ lms.outdoor.board.d8_0.bagID = 4;
 %---------------------------------
 % Alu
 
-% La r�flexion du sensor sur la plaque induit des erreurs
+% % La r�flexion du sensor sur la plaque induit des erreurs
 % lms.outdoor.alu.d0_2.plateIDs = [179, 180, 181, 182, 183, 184];
 % lms.outdoor.alu.d0_2.laserIDs = [197, 198, 199];
 % lms.outdoor.alu.d0_2.bagID = 9;
-
-% L'angle d'incidence eleve et la plaque reflechissante perd le beam
+% 
+% % L'angle d'incidence eleve et la plaque reflechissante perd le beam
 % lms.outdoor.alu.d1_0.plateIDs = [179, 180, 181, 182, 183, 184];
 % lms.outdoor.alu.d1_0.laserIDs = [194, 195, 196];
 % lms.outdoor.alu.d1_0.bagID = 8;

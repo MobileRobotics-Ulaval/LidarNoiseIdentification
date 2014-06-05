@@ -47,5 +47,5 @@ for i = 1:length(sensor)
         end
     end
 end
-
+disp('finish')
 clear sensor location plate angle i j k m counter

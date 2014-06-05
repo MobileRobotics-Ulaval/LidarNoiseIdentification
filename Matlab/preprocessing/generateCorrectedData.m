@@ -4,9 +4,8 @@
 
 % sensor = {'urg','utm','lms'};
 % location = {'indoor','outdoor'};
-% plate = {'board', 'alu', 'steel', 'iron'};
-sensor = {'utm'};
-location = {'indoor'};
+sensor = {'lms'};
+location = {'outdoor'};
 plate = {'board', 'alu', 'steel', 'iron'};
 dist = {'d0_2', 'd1_0', 'd2_0', 'd4_0', 'd8_0'};
 counter = 0;
@@ -30,12 +29,15 @@ end
 
 disp('finished')
 
+clear sensor location plate dist i j k m counter
+
 %% Generate corrected data from angle dataset 
 
 % ****************** generateIDs_angle before ***********************
 
 % sensor = {'urg','utm','lms'};
-sensor = {'utm'};
+% location = {'indoor','outdoor'};
+sensor = {'lms'};
 location = {'indoor'};
 plate = {'board', 'alu', 'steel', 'iron'};
 angle = {'a0', 'a15', 'a30', 'a45', 'a60', 'a75'};

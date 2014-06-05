@@ -190,22 +190,26 @@ data.(sensor).(location).(plate).(angle).result.pz = result(:, pz);
 %                                                                     `o
 %  http://mathforum.org/library/drmath/view/55260.html                  C
 
+
 if sensor == 'utm'
-   
-   d = data.(sensor).(location).(plate).(angle).result.d;
-   err_d = data.(sensor).(location).(plate).(angle).result.err_d;
-   h = d + err_d;
-   inc = data.(sensor).(location).(plate).(angle).result.inc;
-   alpha = 0.0012217;
-   beta = pi/2 - inc;
-   x = h.*sin(alpha)./sin(beta+alpha);
-   y = h.*sin(alpha)./sin(beta-alpha);
-   semiMajorAxis = (x+y)./2;
-   semiMinorAxis = (x+y).*sin(beta-alpha)./(2.*cos(alpha)) + (y-x).*sin(beta)./2;
-   
-   data.(sensor).(location).(plate).(angle).result.beamArea = pi.*semiMajorAxis.*semiMinorAxis;
+    alpha = 0.0012217; % half of opening angle in rad  
+elseif sensor == 'lms'
+    alpha = 0.0072431;
+elseif sensor == 'urg'
+    alpha = 0.00113446;
 end
 
- 
+d = data.(sensor).(location).(plate).(angle).result.d;
+err_d = data.(sensor).(location).(plate).(angle).result.err_d;
+h = d + err_d;
+inc = data.(sensor).(location).(plate).(angle).result.inc;
+beta = pi/2 - inc;
+x = h.*sin(alpha)./sin(beta+alpha);
+y = h.*sin(alpha)./sin(beta-alpha);
+semiMajorAxis = (x+y)./2;
+semiMinorAxis = (x+y).*sin(beta-alpha)./(2.*cos(alpha)) + (y-x).*sin(beta)./2;
+
+data.(sensor).(location).(plate).(angle).result.beamArea = pi.*semiMajorAxis.*semiMinorAxis;
+
 
 clear d x y inc alpha beta semiMajorAxis semiMinorAxis

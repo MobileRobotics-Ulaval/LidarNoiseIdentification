@@ -7,7 +7,7 @@ load '/home/cantor/Desktop/Robotique/matlab_scripts/data/data_distance.mat';
 load '/home/cantor/Desktop/Robotique/matlab_scripts/data/data_angle.mat';
 
 %% board Distance
-
+figure;
 dInt = aggregateSinglePlate_distance(data_distance,'lms', 'board', 'outdoor', 'int');
 dErr = aggregateSinglePlate_distance(data_distance,'lms', 'board', 'outdoor', 'err_d');
 dDist = aggregateSinglePlate_distance(data_distance,'lms', 'board', 'outdoor', 'd');
@@ -18,7 +18,7 @@ dErr = dErr(dInt>0);
 dDist = dDist(dInt>0);
 %dInc = dInc(dInt>0);
 
-step = 18;
+step = 1;
 
 hold on;
 scatter(dInt(1:step:end), dErr(1:step:end), 4, dDist(1:step:end));
@@ -30,7 +30,7 @@ scatter(dInt(1:step:end), dErr(1:step:end), 4, dDist(1:step:end));
 title('board : color = distance')
 xlabel('intensity');
 ylabel('error (m)');
-ylim([-0.1, 0.1]); % outliers
+% ylim([-0.1, 0.1]); % outliers
 %xlim([0, 14000]);
 
 
@@ -46,7 +46,7 @@ dErr = dErr(dInt>0);
 dDist = dDist(dInt>0);
 %dInc = dInc(dInt>0);
 
-step = 18;
+step = 1;
 
 hold on;
 scatter(dInt(1:step:end), dErr(1:step:end), 4, dDist(1:step:end));
@@ -58,7 +58,7 @@ scatter(dInt(1:step:end), dErr(1:step:end), 4, dDist(1:step:end));
 title('alu : color = distance')
 xlabel('intensity');
 ylabel('error (m)');
-ylim([-0.15, 0.1]);
+% ylim([-0.15, 0.1]);
 %xlim([0, 14000]);
 
 %% iron Distance
@@ -74,7 +74,7 @@ dErr = dErr(dInt>0);
 dDist = dDist(dInt>0);
 %dInc = dInc(dInt>0);
 
-step = 18;
+step = 1;
 
 hold on;
 scatter(dInt(1:step:end), dErr(1:step:end), 4, dDist(1:step:end));
@@ -103,7 +103,7 @@ dErr = dErr(dInt>0);
 dDist = dDist(dInt>0);
 %dInc = dInc(dInt>0);
 
-step = 18;
+step = 1;
 
 hold on;
 scatter(dInt(1:step:end), dErr(1:step:end), 4, dDist(1:step:end));
@@ -129,7 +129,7 @@ dInt = dInt(dInt>0);
 dErr = dErr(dInt>0);
 dInc = dInc(dInt>0);
 
-step = 10;
+step = 1;
 
 hold on;
 scatter(dInt(1:step:end), dErr(1:step:end), 4, dInc(1:step:end));
@@ -151,22 +151,23 @@ figure;
 dInt = aggregateSinglePlate_angle(data_angle,'lms', 'alu', 'int');
 dErr = aggregateSinglePlate_angle(data_angle,'lms', 'alu', 'err_d');
 dInc = aggregateSinglePlate_angle(data_angle,'lms', 'alu', 'inc');
+dArea = aggregateSinglePlate_angle(data_angle,'lms', 'alu', 'beamArea');
 
 dInt = dInt(dInt>0);
 dErr = dErr(dInt>0);
 dInc = dInc(dInt>0);
 
-step = 10;
+step = 1;
 
 hold on;
-scatter(dInt(1:step:end), dErr(1:step:end), 4, dInc(1:step:end));
+scatter(dArea(1:step:end), dErr(1:step:end), 4, dInc(1:step:end));
 % [dx, dy, dw] = statsPerBin(dInt(1:step:end), dErr(1:step:end), 50);
 % plot(dx(:,1),dy(:,1),'--k')
 % plot(dx(:,1),dy(:,2),'.k')
 % plot(dx(:,1),dy(:,3),'--k')  
 
 title('alu : color = incidence')
-xlabel('intensity');
+xlabel('beam area (m²)');
 ylabel('error (m)');
 ylim([-0.4, 0.1]);
 %xlim([0, 14000]);

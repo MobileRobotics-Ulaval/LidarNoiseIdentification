@@ -8,8 +8,8 @@ load '/home/cantor/Desktop/Robotique/matlab_scripts/data/utm_corrDist.mat';
 
 %% board Distance
 figure;
-dataset = utm_corrDist;
-%dataset = data_distance;
+% dataset = utm_corrDist;
+dataset = data_distance;
 
 dInt = aggregateSinglePlate_distance(dataset,'utm', 'board', 'indoor', 'int');
 dErr = aggregateSinglePlate_distance(dataset,'utm', 'board', 'indoor', 'err_d');
@@ -32,7 +32,7 @@ plot(dx(:,1),dy(:,2),'.k')
 plot(dx(:,1),dy(:,3),'--k')  
 
 title('board : Color = distance')
-xlabel('intensity');
+%xlabel('intensity');
 ylabel('error (m)');
 %ylim([-0.1, 0.1]);
 %xlim([0, 14000]);
@@ -66,7 +66,7 @@ plot(dx(:,1),dy(:,2),'.k')
 plot(dx(:,1),dy(:,3),'--k')  
 
 title('alu : Color = distance')
-xlabel('intensity');
+%xlabel('intensity');
 ylabel('error (m)');
 %ylim([-0.1, 0.1]);
 %xlim([0, 14000]);
@@ -80,23 +80,25 @@ dInt = aggregateSinglePlate_distance(dataset,'utm', 'iron', 'indoor', 'int');
 dErr = aggregateSinglePlate_distance(dataset,'utm', 'iron', 'indoor', 'err_d');
 dDist = aggregateSinglePlate_distance(dataset,'utm', 'iron', 'indoor', 'd');
 %dInc = aggregateSinglePlate_distance(dataset,'utm', 'iron', 'indoor', 'inc');
+dArea = aggregateSinglePlate_distance(dataset, 'utm', 'iron', 'indoor', 'beamArea');
 
 dInt = dInt(dInt>0);
 dErr = dErr(dInt>0);
 dDist = dDist(dInt>0);
 %dInc = dInc(dInt>0);
+dArea = dArea(dInt>0);
 
 step = 1;
 
 hold on;
-scatter(dInt(1:step:end), dErr(1:step:end), 4, dDist(1:step:end));
-[dx, dy, dw] = statsPerBin(dInt(1:step:end), dErr(1:step:end), 50);
+scatter(dArea(1:step:end), dErr(1:step:end), 4, dDist(1:step:end));
+[dx, dy, dw] = statsPerBin(dArea(1:step:end), dErr(1:step:end), 50);
 plot(dx(:,1),dy(:,1),'--k')
 plot(dx(:,1),dy(:,2),'.k')
 plot(dx(:,1),dy(:,3),'--k')  
 
 title('iron : Color = distance')
-xlabel('intensity');
+% xlabel('intensity');
 ylabel('error (m)');
 %ylim([-0.1, 0.1]);
 %xlim([0, 14000]);
@@ -111,23 +113,25 @@ dInt = aggregateSinglePlate_distance(dataset,'utm', 'steel', 'indoor', 'int');
 dErr = aggregateSinglePlate_distance(dataset,'utm', 'steel', 'indoor', 'err_d');
 dDist = aggregateSinglePlate_distance(dataset,'utm', 'steel', 'indoor', 'd');
 %dInc = aggregateSinglePlate_distance(dataset,'utm', 'steel', 'indoor', 'inc');
+dArea = aggregateSinglePlate_distance(dataset, 'utm', 'steel', 'indoor', 'beamArea');
 
 dInt = dInt(dInt>0);
 dErr = dErr(dInt>0);
 dDist = dDist(dInt>0);
 %dInc = dInc(dInt>0);
+dArea = dArea(dInt>0);
 
 step = 1;
 
 hold on;
-scatter(dInt(1:step:end), dErr(1:step:end), 4, dDist(1:step:end));
-[dx, dy, dw] = statsPerBin(dInt(1:step:end), dErr(1:step:end), 50);
+scatter(dArea(1:step:end), dErr(1:step:end), 4, dDist(1:step:end));
+[dx, dy, dw] = statsPerBin(dArea(1:step:end), dErr(1:step:end), 50);
 plot(dx(:,1),dy(:,1),'--k')
 plot(dx(:,1),dy(:,2),'.k')
 plot(dx(:,1),dy(:,3),'--k')  
 
 title('steel : Color = distance')
-xlabel('intensity');
+% xlabel('intensity');
 ylabel('error (m)');
 %ylim([-0.1, 0.1]);
 %xlim([0, 14000]);
@@ -165,22 +169,24 @@ figure;
 dInt = aggregateSinglePlate_angle(data_angle,'utm', 'alu', 'int');
 dErr = aggregateSinglePlate_angle(data_angle,'utm', 'alu', 'err_d');
 dInc = aggregateSinglePlate_angle(data_angle,'utm', 'alu', 'inc');
+dArea = aggregateSinglePlate_angle(data_angle,'utm', 'alu', 'beamArea');
+
 
 dInt = dInt(dInt>0);
 dErr = dErr(dInt>0);
 dInc = dInc(dInt>0);
-
+dArea = dArea(dInt>0);
 step = 1;
 
 hold on;
-scatter(dInc(1:step:end), dErr(1:step:end), 4, dInt(1:step:end));
-[dx, dy, dw] = statsPerBin(dInc(1:step:end), dErr(1:step:end), 50);
-plot(dx(:,1),dy(:,1),'--k')
-plot(dx(:,1),dy(:,2),'.k')
-plot(dx(:,1),dy(:,3),'--k')  
+scatter(dArea(1:step:end), dErr(1:step:end), 4, dInt(1:step:end));
+% [dx, dy, dw] = statsPerBin(dInc(1:step:end), dErr(1:step:end), 50);
+% plot(dx(:,1),dy(:,1),'--k')
+% plot(dx(:,1),dy(:,2),'.k')
+% plot(dx(:,1),dy(:,3),'--k')  
 
 title('alu : color = intensity')
-xlabel('incidence');
+xlabel('beam area (m²)');
 ylabel('error (m)');
 %ylim([-0.1, 0.1]);
 %xlim([0, 14000]);
