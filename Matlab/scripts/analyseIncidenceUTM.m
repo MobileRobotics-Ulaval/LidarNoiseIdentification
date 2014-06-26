@@ -1,15 +1,13 @@
 clear;
 clc;
 load '/home/cantor/Desktop/Robotique/matlab_scripts/data/data_angle.mat';
-load '/home/cantor/Desktop/Robotique/matlab_scripts/data/utm_corrAngle.mat';
+load '/home/cantor/Desktop/Robotique/matlab_scripts/data/data_distance.mat';
 
 %% UTM indoor alu : error vs incidence
 
-plate = 'steel';
+plate = 'alu';
 sensor = 'utm';
-%dataSet = data_angle;
-%dataSet = utm_corrAngle;
-dataSet = corrAngleWithArea;
+dataSet = data_angle;
 
 varX = 'inc';
 varY = 'err_d';
@@ -25,7 +23,7 @@ plot(path.a0.result.(varX), path.a0.result.(varY), '.k',...
  
       
  
- title('UTM indoor (intensity corrected) : steel plate', 'Fontsize', 15, 'Fontweight', 'demi')
+ title('UTM indoor (intensity corrected) : aluminum plate', 'Fontsize', 15, 'Fontweight', 'demi')
 xlabel('incidence (rad)','Fontsize',15, 'Fontweight', 'demi');
 ylabel('error (m)', 'Fontsize', 15, 'Fontweight', 'demi');
 ylim([-0.1, 0.4])

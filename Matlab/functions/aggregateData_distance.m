@@ -13,7 +13,7 @@ allData = [];
 for i = 1:length(plate)
     for j  = 1:length(distance)
         if isfield(data.(sensor), location) ...
-                   && isfield(data.(sensor).(location).(plate{i}), distance{j})
+                   && isfield(data.(sensor).(location).(plate{i}), distance{j}) 
 
             allData = [allData ; data.(sensor).(location).(plate{i}).(distance{j}).result.(x)];
         end

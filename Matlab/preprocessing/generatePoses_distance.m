@@ -199,6 +199,7 @@ semiMajorAxis = (x+y)./2;
 semiMinorAxis = (x+y).*sin(beta-alpha)./(2.*cos(alpha)) + (y-x).*sin(beta)./2;
 
 data.(sensor).(location).(plate).(dist).result.beamArea = pi.*semiMajorAxis.*semiMinorAxis;
+data.(sensor).(location).(plate).(dist).result.axisRatio = semiMajorAxis./semiMinorAxis;
 
 clear d x y inc alpha beta semiMajorAxis semiMinorAxis
 

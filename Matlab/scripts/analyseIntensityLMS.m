@@ -56,7 +56,6 @@ int = aggregateAllDatasets(data_distance, data_angle,'lms', 'outdoor', 'int');
 err = aggregateAllDatasets(data_distance, data_angle,'lms', 'outdoor', 'err_d');
 dist = aggregateAllDatasets(data_distance, data_angle,'lms', 'outdoor', 'd');
 inc = aggregateAllDatasets(data_distance, data_angle,'lms', 'outdoor', 'inc');
-area = aggregateAllDatasets(lms_corrDist, lms_corrAngle, 'lms', 'outdoor', 'beamArea');
 
 % filters
 step = 1;
@@ -73,7 +72,7 @@ dist = dist(1:step:end);
 % remove random sample from 20 cm data
 shortDist = dist(dist<1);
 longDist = dist(dist>=1);
-randIndex = randsample((1:1:732461), 350000)';
+randIndex = randsample(length(shortDist), floor(length(shortDist)/2.5))';
 shortDistRand = shortDist(randIndex);
 randDist = [shortDistRand ; longDist];
 
@@ -154,10 +153,10 @@ ylabel('error (m)', 'Fontsize', 15, 'Fontweight', 'demi');
 %set(gca, 'XTick', (0:1000:max(int)));
 set(gca, 'Fontsize', 15);
 %xlim([0, 10000]);
-% ylim([-0.4, 0.2]);
+% ylim([-0.1, 0.1]);
 
 
-%% Median graph *** note : la mediane est influencee par le grand nombre de donnees a 20 cm
+%% Median graph 
 
 % raw median
 figure;
@@ -186,11 +185,13 @@ set(gca, 'Fontsize', 15);
 
 %% Corrected Err vs Int (color incidence)
 
-int = aggregateAllDatasets(lms_corrDist, lms_corrAngle, 'lms', 'outdoor', 'int');
-err = aggregateAllDatasets(lms_corrDist, lms_corrAngle, 'lms', 'outdoor', 'err_d');
-dist = aggregateAllDatasets(lms_corrDist, lms_corrAngle, 'lms', 'outdoor', 'd');
-inc = aggregateAllDatasets(lms_corrDist, lms_corrAngle, 'lms', 'outdoor', 'inc');
-area = aggregateAllDatasets(lms_corrDist, lms_corrAngle, 'lms', 'outdoor', 'beamArea');
+datasetCorrD = lms_corrDist;
+
+int = aggregateAllDatasets(datasetCorrD, lms_corrAngle, 'lms', 'outdoor', 'int');
+err = aggregateAllDatasets(datasetCorrD, lms_corrAngle, 'lms', 'outdoor', 'err_d');
+dist = aggregateAllDatasets(datasetCorrD, lms_corrAngle, 'lms', 'outdoor', 'd');
+inc = aggregateAllDatasets(datasetCorrD, lms_corrAngle, 'lms', 'outdoor', 'inc');
+area = aggregateAllDatasets(datasetCorrD, lms_corrAngle, 'lms', 'outdoor', 'beamArea');
 
 % filters
 step = 1;
@@ -210,35 +211,35 @@ dist = dist(1:step:end);
 inc = inc(1:step:end);
 area = area(1:step:end);
 
-% remove random sample from 20 cm data
-shortDist = dist(dist<1);
-longDist = dist(dist>=1);
-randIndex = randsample((1:1:713655), 350000)';
-shortDistRand = shortDist(randIndex);
-randDist = [shortDistRand ; longDist];
+% % remove random sample from 20 cm data
+% shortDist = dist(dist<1);
+% longDist = dist(dist>=1);
+% randIndex = randsample((1:1:713655), 350000)';
+% shortDistRand = shortDist(randIndex);
+% randDist = [shortDistRand ; longDist];
+% 
+% % sampled variables 
+% randShortInt = int(randIndex);
+% randLongInt = int(dist>=1);
+% randInt = [randShortInt ; randLongInt];
+% 
+% randShortErr = err(randIndex);
+% randLongErr = err(dist>=1);
+% randErr = [randShortErr ; randLongErr];
+% 
+% randShortInc = inc(randIndex);
+% randLongInc = inc(dist>=1);
+% randInc = [randShortInc ; randLongInc];
+% 
+% randShortArea = area(randIndex);
+% randLongArea = area(dist>=1);
+% randArea = [randShortArea ; randLongInc];
 
-% sampled variables 
-randShortInt = int(randIndex);
-randLongInt = int(dist>=1);
-randInt = [randShortInt ; randLongInt];
-
-randShortErr = err(randIndex);
-randLongErr = err(dist>=1);
-randErr = [randShortErr ; randLongErr];
-
-randShortInc = inc(randIndex);
-randLongInc = inc(dist>=1);
-randInc = [randShortInc ; randLongInc];
-
-randShortArea = area(randIndex);
-randLongArea = area(dist>=1);
-randArea = [randShortArea ; randLongInc];
-
-
+% remettre les rand* dans les paramètres
 figure;
-scatter(randInt, randErr, 4, randInc);
+scatter(int, err, 4, inc);
 hold on;
-[dx, dy, dw] = statsPerBin(randInt, randErr, 50);
+[dx, dy, dw] = statsPerBin(int, err, 50);
 plot(dx(:,1),dy(:,1),'--k')
 plot(dx(:,1),dy(:,2),'.k')
 plot(dx(:,1),dy(:,3),'--k')  
@@ -249,7 +250,7 @@ ylabel('error (m)', 'Fontsize', 15, 'Fontweight', 'demi');
 %set(gca, 'XTick', (0:1000:max(int)));
 set(gca, 'Fontsize', 15);
 %xlim([0, 10000]);
-% ylim([-0.4, 0.2]);
+% ylim([-0.1, 0.1]);
 
 
 %% Corrected Err vs Int (color beam area)
@@ -269,3 +270,36 @@ ylabel('error (m)', 'Fontsize', 15, 'Fontweight', 'demi');
 set(gca, 'Fontsize', 15);
 %xlim([0, 10000]);
 % ylim([-0.4, 0.2]);
+
+
+%%
+figure;
+hold on;
+datasetD = data_distance;
+datasetA = data_angle;
+
+int = aggregateAllDatasets(datasetD, datasetA, 'lms', 'outdoor', 'int');
+err = aggregateAllDatasets(datasetD, datasetA, 'lms', 'outdoor', 'err_d');
+int = int(int>0);
+err = err(int>0);
+int = int(int<2000);
+err = err(int<2000);
+
+[dx, dy, dw] = statsPerBin(int, err, 50);
+plot(dx(:,1),dy(:,2),'.-k')
+intDBoard = aggregateSinglePlate_distance(datasetD, 'lms', 'board', 'outdoor', 'int');
+errDBoard = aggregateSinglePlate_distance(datasetD, 'lms', 'board', 'outdoor', 'err');
+intABoard = aggregateSinglePlate_angle(datasetA, 'lms', 'board','int');
+errABoard = aggregateSinglePlate_angle(datasetA, 'lms', 'board','err');
+intBoard = [intDBoard ; intABoard];
+errBoard = [errDBoard ; errABoard];
+intBoard = intBoard(intBoard>0);
+errBoard = errBoard(intBoard>0);
+intBoard = intBoard(intBoard<2000);
+errBoard = errBoard(intBoard<2000);
+
+[dx2, dy2, dw2] = statsPerBin(intBoard, errBoard, 50);
+plot(dx2(:,1),dy2(:,2),'.-b')
+
+%%
+hist(intBoard);

@@ -155,6 +155,7 @@ figure;
 datasetD = data_distance;
 datasetA = data_angle;
 
+int = aggregateAllDatasets(datasetD, datasetA, 'lms', 'outdoor', 'int');
 area = aggregateAllDatasets(datasetD, datasetA, 'lms', 'outdoor', 'beamArea');
 err = aggregateAllDatasets(datasetD, datasetA,'lms', 'outdoor', 'err_d');
 dist = aggregateAllDatasets(datasetD, datasetA,'lms', 'outdoor', 'd');
@@ -162,12 +163,16 @@ inc = aggregateAllDatasets(datasetD, datasetA, 'lms', 'outdoor', 'inc');
 
 % filters
 step = 3;
-area = area(area>0);
-err = err(area>0);
-dist = dist(area>0);
+area = area(int>0);
+err = err(int>0);
+dist = dist(int>0);
+inc = inc(int>0);
+int = int(int>0);
 area = area(1:step:end);
 err = err(1:step:end);
 dist = dist(1:step:end);
+int = int(1:step:end);
+inc = inc(1:step:end);
 
 scatter(area, err, 4, dist);
 hold on;
@@ -178,3 +183,5 @@ title('LMS indoor/outdoor (intensity NOT corrected): all plates, color = distanc
 xlabel('beam area (m²)','Fontsize',15, 'Fontweight', 'demi');
 ylabel('error (m)', 'Fontsize', 15, 'Fontweight', 'demi');
 set(gca, 'Fontsize', 15);
+
+

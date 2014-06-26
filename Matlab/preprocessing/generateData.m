@@ -1,8 +1,10 @@
 %% Generate data from distance dataset 
 % *** generateIDs_distance before ***
 
-sensor = {'urg','utm','lms'};
-location = {'indoor','outdoor'};
+% sensor = {'urg','utm','lms'};
+sensor = {'utm'};
+% location = {'indoor','outdoor'};
+location = {'indoor'};
 plate = {'board', 'alu', 'steel', 'iron'};
 dist = {'d0_2', 'd1_0', 'd2_0', 'd4_0', 'd8_0'};
 counter = 0;
@@ -29,7 +31,8 @@ disp('finished')
 %% Generate data from angle dataset 
 % *** generateIDs_angle before ***
 
-sensor = {'utm','lms'};
+% sensor = {'utm','lms'};
+sensor = {'utm'};
 location = {'indoor'};
 plate = {'board', 'alu', 'steel', 'iron'};
 angle = {'a0', 'a15', 'a30', 'a45', 'a60', 'a75'};

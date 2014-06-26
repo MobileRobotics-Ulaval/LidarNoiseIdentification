@@ -296,7 +296,7 @@ utm.outdoor.iron.d8_0.bagID = 15;
 lms.outdoor.folderName = 'LMS100_21-Jun-2012-17_43_34/';
 
 %---------------------------------
-% White Board
+% White Board erreur étrange
 lms.outdoor.board.d0_2.plateIDs = [143, 144, 145, 146, 147, 148];
 lms.outdoor.board.d0_2.laserIDs = [164, 165, 166];
 lms.outdoor.board.d0_2.bagID = 0;

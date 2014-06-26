@@ -4,8 +4,8 @@
 
 % sensor = {'urg','utm','lms'};
 % location = {'indoor','outdoor'};
-sensor = {'lms'};
-location = {'outdoor'};
+sensor = {'utm'};
+location = {'indoor'};
 plate = {'board', 'alu', 'steel', 'iron'};
 dist = {'d0_2', 'd1_0', 'd2_0', 'd4_0', 'd8_0'};
 counter = 0;
@@ -37,7 +37,7 @@ clear sensor location plate dist i j k m counter
 
 % sensor = {'urg','utm','lms'};
 % location = {'indoor','outdoor'};
-sensor = {'lms'};
+sensor = {'utm'};
 location = {'indoor'};
 plate = {'board', 'alu', 'steel', 'iron'};
 angle = {'a0', 'a15', 'a30', 'a45', 'a60', 'a75'};

@@ -11,22 +11,26 @@ figure;
 % dataset = utm_corrDist;
 dataset = data_distance;
 
-dInt = aggregateSinglePlate_distance(dataset,'utm', 'board', 'indoor', 'int');
-dErr = aggregateSinglePlate_distance(dataset,'utm', 'board', 'indoor', 'err_d');
-dDist = aggregateSinglePlate_distance(dataset,'utm', 'board', 'indoor', 'd');
-dInc = aggregateSinglePlate_distance(dataset,'utm', 'board', 'indoor', 'inc');
-dArea = aggregateSinglePlate_distance(dataset, 'utm', 'board', 'indoor', 'beamArea');
+int = aggregateSinglePlate_distance(dataset,'utm', 'board', 'indoor', 'int');
+err = aggregateSinglePlate_distance(dataset,'utm', 'board', 'indoor', 'err_d');
+dist = aggregateSinglePlate_distance(dataset,'utm', 'board', 'indoor', 'd');
+inc = aggregateSinglePlate_distance(dataset,'utm', 'board', 'indoor', 'inc');
+area = aggregateSinglePlate_distance(dataset, 'utm', 'board', 'indoor', 'beamArea');
 
-dInt = dInt(dInt>0);
-dErr = dErr(dInt>0);
-dDist = dDist(dInt>0);
-dInc = dInc(dInt>0);
-dArea = dArea(dInt>0);
+int = int(int>0);
+err = err(int>0);
+dist = dist(int>0);
+inc = inc(int>0);
+area = area(int>0);
 step = 1;
 
+X = int;
+Y = err;
+Z = inc;
+
 hold on;
-scatter(dArea(1:step:end), dErr(1:step:end), 4, dDist(1:step:end));
-[dx, dy, dw] = statsPerBin(dArea(1:step:end), dErr(1:step:end), 50);
+scatter(X(1:step:end), Y(1:step:end), 4, Z(1:step:end));
+[dx, dy, dw] = statsPerBin(X(1:step:end), Y(1:step:end), 50);
 plot(dx(:,1),dy(:,1),'--k')
 plot(dx(:,1),dy(:,2),'.k')
 plot(dx(:,1),dy(:,3),'--k')  
@@ -44,23 +48,23 @@ figure;
 %dataset = utm_corrDist;
 dataset = data_distance;
 
-dInt = aggregateSinglePlate_distance(dataset,'utm', 'alu', 'indoor', 'int');
-dErr = aggregateSinglePlate_distance(dataset,'utm', 'alu', 'indoor', 'err_d');
-dDist = aggregateSinglePlate_distance(dataset,'utm', 'alu', 'indoor', 'd');
-%dInc = aggregateSinglePlate_distance(dataset,'utm', 'alu', 'indoor', 'inc');
-dArea = aggregateSinglePlate_distance(dataset, 'utm', 'alu', 'indoor', 'beamArea');
+int = aggregateSinglePlate_distance(dataset,'utm', 'alu', 'indoor', 'int');
+err = aggregateSinglePlate_distance(dataset,'utm', 'alu', 'indoor', 'err_d');
+dist = aggregateSinglePlate_distance(dataset,'utm', 'alu', 'indoor', 'd');
+%inc = aggregateSinglePlate_distance(dataset,'utm', 'alu', 'indoor', 'inc');
+area = aggregateSinglePlate_distance(dataset, 'utm', 'alu', 'indoor', 'beamArea');
 
-dInt = dInt(dInt>0);
-dErr = dErr(dInt>0);
-dDist = dDist(dInt>0);
-%dInc = dInc(dInt>0);
-dArea = dArea(dInt>0);
+int = int(int>0);
+err = err(int>0);
+dist = dist(int>0);
+%inc = inc(int>0);
+area = area(int>0);
 
 step = 1;
 
 hold on;
-scatter(dArea(1:step:end), dErr(1:step:end), 4, dDist(1:step:end));
-[dx, dy, dw] = statsPerBin(dArea(1:step:end), dErr(1:step:end), 50);
+scatter(area(1:step:end), err(1:step:end), 4, dist(1:step:end));
+[dx, dy, dw] = statsPerBin(area(1:step:end), err(1:step:end), 50);
 plot(dx(:,1),dy(:,1),'--k')
 plot(dx(:,1),dy(:,2),'.k')
 plot(dx(:,1),dy(:,3),'--k')  
@@ -76,23 +80,23 @@ figure;
 dataset = utm_corrDist;
 %dataset = data_distance;
 
-dInt = aggregateSinglePlate_distance(dataset,'utm', 'iron', 'indoor', 'int');
-dErr = aggregateSinglePlate_distance(dataset,'utm', 'iron', 'indoor', 'err_d');
-dDist = aggregateSinglePlate_distance(dataset,'utm', 'iron', 'indoor', 'd');
-%dInc = aggregateSinglePlate_distance(dataset,'utm', 'iron', 'indoor', 'inc');
-dArea = aggregateSinglePlate_distance(dataset, 'utm', 'iron', 'indoor', 'beamArea');
+int = aggregateSinglePlate_distance(dataset,'utm', 'iron', 'indoor', 'int');
+err = aggregateSinglePlate_distance(dataset,'utm', 'iron', 'indoor', 'err_d');
+dist = aggregateSinglePlate_distance(dataset,'utm', 'iron', 'indoor', 'd');
+%inc = aggregateSinglePlate_distance(dataset,'utm', 'iron', 'indoor', 'inc');
+area = aggregateSinglePlate_distance(dataset, 'utm', 'iron', 'indoor', 'beamArea');
 
-dInt = dInt(dInt>0);
-dErr = dErr(dInt>0);
-dDist = dDist(dInt>0);
-%dInc = dInc(dInt>0);
-dArea = dArea(dInt>0);
+int = int(int>0);
+err = err(int>0);
+dist = dist(int>0);
+%inc = inc(int>0);
+area = area(int>0);
 
 step = 1;
 
 hold on;
-scatter(dArea(1:step:end), dErr(1:step:end), 4, dDist(1:step:end));
-[dx, dy, dw] = statsPerBin(dArea(1:step:end), dErr(1:step:end), 50);
+scatter(area(1:step:end), err(1:step:end), 4, dist(1:step:end));
+[dx, dy, dw] = statsPerBin(area(1:step:end), err(1:step:end), 50);
 plot(dx(:,1),dy(:,1),'--k')
 plot(dx(:,1),dy(:,2),'.k')
 plot(dx(:,1),dy(:,3),'--k')  
@@ -106,26 +110,25 @@ ylabel('error (m)');
 
 %% steel Distance
 figure;
-dataset = utm_corrDist;
-%dataset = data_distance;
+dataset = data_distance;
 
-dInt = aggregateSinglePlate_distance(dataset,'utm', 'steel', 'indoor', 'int');
-dErr = aggregateSinglePlate_distance(dataset,'utm', 'steel', 'indoor', 'err_d');
-dDist = aggregateSinglePlate_distance(dataset,'utm', 'steel', 'indoor', 'd');
-%dInc = aggregateSinglePlate_distance(dataset,'utm', 'steel', 'indoor', 'inc');
-dArea = aggregateSinglePlate_distance(dataset, 'utm', 'steel', 'indoor', 'beamArea');
+int = aggregateSinglePlate_distance(dataset,'utm', 'steel', 'indoor', 'int');
+err = aggregateSinglePlate_distance(dataset,'utm', 'steel', 'indoor', 'err_d');
+dist = aggregateSinglePlate_distance(dataset,'utm', 'steel', 'indoor', 'd');
+%inc = aggregateSinglePlate_distance(dataset,'utm', 'steel', 'indoor', 'inc');
+area = aggregateSinglePlate_distance(dataset, 'utm', 'steel', 'indoor', 'beamArea');
 
-dInt = dInt(dInt>0);
-dErr = dErr(dInt>0);
-dDist = dDist(dInt>0);
-%dInc = dInc(dInt>0);
-dArea = dArea(dInt>0);
+int = int(int>0);
+err = err(int>0);
+dist = dist(int>0);
+%inc = inc(int>0);
+area = area(int>0);
 
 step = 1;
 
 hold on;
-scatter(dArea(1:step:end), dErr(1:step:end), 4, dDist(1:step:end));
-[dx, dy, dw] = statsPerBin(dArea(1:step:end), dErr(1:step:end), 50);
+scatter(area(1:step:end), err(1:step:end), 4, dist(1:step:end));
+[dx, dy, dw] = statsPerBin(area(1:step:end), err(1:step:end), 50);
 plot(dx(:,1),dy(:,1),'--k')
 plot(dx(:,1),dy(:,2),'.k')
 plot(dx(:,1),dy(:,3),'--k')  
@@ -139,19 +142,19 @@ ylabel('error (m)');
 %% Board angle
 figure;
 
-dInt = aggregateSinglePlate_angle(data_angle,'utm', 'board', 'int');
-dErr = aggregateSinglePlate_angle(data_angle,'utm', 'board', 'err_d');
-dInc = aggregateSinglePlate_angle(data_angle,'utm', 'board', 'inc');
+int = aggregateSinglePlate_angle(data_angle,'utm', 'board', 'int');
+err = aggregateSinglePlate_angle(data_angle,'utm', 'board', 'err_d');
+inc = aggregateSinglePlate_angle(data_angle,'utm', 'board', 'inc');
 
-dInt = dInt(dInt>0);
-dErr = dErr(dInt>0);
-dInc = dInc(dInt>0);
+int = int(int>0);
+err = err(int>0);
+inc = inc(int>0);
 
 step = 1;
 
 hold on;
-scatter(dInc(1:step:end), dErr(1:step:end), 4, dInt(1:step:end));
-[dx, dy, dw] = statsPerBin(dInc(1:step:end), dErr(1:step:end), 50);
+scatter(int(1:step:end), err(1:step:end), 4, inc(1:step:end));
+[dx, dy, dw] = statsPerBin(int(1:step:end), err(1:step:end), 50);
 plot(dx(:,1),dy(:,1),'--k')
 plot(dx(:,1),dy(:,2),'.k')
 plot(dx(:,1),dy(:,3),'--k')  
@@ -166,21 +169,21 @@ ylabel('error (m)');
 %% Alu angle
 figure;
 
-dInt = aggregateSinglePlate_angle(data_angle,'utm', 'alu', 'int');
-dErr = aggregateSinglePlate_angle(data_angle,'utm', 'alu', 'err_d');
-dInc = aggregateSinglePlate_angle(data_angle,'utm', 'alu', 'inc');
-dArea = aggregateSinglePlate_angle(data_angle,'utm', 'alu', 'beamArea');
+int = aggregateSinglePlate_angle(data_angle,'utm', 'alu', 'int');
+err = aggregateSinglePlate_angle(data_angle,'utm', 'alu', 'err_d');
+inc = aggregateSinglePlate_angle(data_angle,'utm', 'alu', 'inc');
+area = aggregateSinglePlate_angle(data_angle,'utm', 'alu', 'beamArea');
 
 
-dInt = dInt(dInt>0);
-dErr = dErr(dInt>0);
-dInc = dInc(dInt>0);
-dArea = dArea(dInt>0);
+int = int(int>0);
+err = err(int>0);
+inc = inc(int>0);
+area = area(int>0);
 step = 1;
 
 hold on;
-scatter(dArea(1:step:end), dErr(1:step:end), 4, dInt(1:step:end));
-% [dx, dy, dw] = statsPerBin(dInc(1:step:end), dErr(1:step:end), 50);
+scatter(int(1:step:end), err(1:step:end), 4, inc(1:step:end));
+% [dx, dy, dw] = statsPerBin(inc(1:step:end), err(1:step:end), 50);
 % plot(dx(:,1),dy(:,1),'--k')
 % plot(dx(:,1),dy(:,2),'.k')
 % plot(dx(:,1),dy(:,3),'--k')  
@@ -195,19 +198,26 @@ ylabel('error (m)');
 %% Iron angle
 figure;
 
-dInt = aggregateSinglePlate_angle(data_angle,'utm', 'iron', 'int');
-dErr = aggregateSinglePlate_angle(data_angle,'utm', 'iron', 'err_d');
-dInc = aggregateSinglePlate_angle(data_angle,'utm', 'iron', 'inc');
+int = aggregateSinglePlate_angle(data_angle,'utm', 'iron', 'int');
+err = aggregateSinglePlate_angle(data_angle,'utm', 'iron', 'err_d');
+inc = aggregateSinglePlate_angle(data_angle,'utm', 'iron', 'inc');
+px = aggregateSinglePlate_angle(data_angle,'utm', 'iron', 'px');
 
-dInt = dInt(dInt>0);
-dErr = dErr(dInt>0);
-dInc = dInc(dInt>0);
+
+int = int(int>0);
+err = err(int>0);
+inc = inc(int>0);
+px = px(int>0);
 
 step = 1;
 
+X = int;
+Y = err;
+Z = inc;
+
 hold on;
-scatter(dInc(1:step:end), dErr(1:step:end), 4, dInt(1:step:end));
-[dx, dy, dw] = statsPerBin(dInc(1:step:end), dErr(1:step:end), 50);
+scatter(X(1:step:end), Y(1:step:end), 4, Z(1:step:end));
+[dx, dy, dw] = statsPerBin(X(1:step:end), Y(1:step:end), 50);
 plot(dx(:,1),dy(:,1),'--k')
 plot(dx(:,1),dy(:,2),'.k')
 plot(dx(:,1),dy(:,3),'--k')  
@@ -223,19 +233,24 @@ ylabel('error (m)');
 %% Steel angle
 figure;
 
-dInt = aggregateSinglePlate_angle(data_angle,'utm', 'steel', 'int');
-dErr = aggregateSinglePlate_angle(data_angle,'utm', 'steel', 'err_d');
-dInc = aggregateSinglePlate_angle(data_angle,'utm', 'steel', 'inc');
+int = aggregateSinglePlate_angle(data_angle,'utm', 'steel', 'int');
+err = aggregateSinglePlate_angle(data_angle,'utm', 'steel', 'err_d');
+inc = aggregateSinglePlate_angle(data_angle,'utm', 'steel', 'inc');
 
-dInt = dInt(dInt>0);
-dErr = dErr(dInt>0);
-dInc = dInc(dInt>0);
+int = int(int>0);
+err = err(int>0);
+inc = inc(int>0);
+px = px(int>0);
 
 step = 1;
 
+X = int;
+Y = err;
+Z = inc;
+
 hold on;
-scatter(dInc(1:step:end), dErr(1:step:end), 4, dInt(1:step:end));
-[dx, dy, dw] = statsPerBin(dInc(1:step:end), dErr(1:step:end), 50);
+scatter(X(1:step:end), Y(1:step:end), 4, Z(1:step:end));
+[dx, dy, dw] = statsPerBin(X(1:step:end), Y(1:step:end), 50);
 plot(dx(:,1),dy(:,1),'--k')
 plot(dx(:,1),dy(:,2),'.k')
 plot(dx(:,1),dy(:,3),'--k')  
