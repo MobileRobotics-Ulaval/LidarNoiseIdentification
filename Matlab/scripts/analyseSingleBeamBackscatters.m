@@ -2,6 +2,36 @@ clear; clc;
 load '/home/cantor/Desktop/Robotique/matlab_scripts/data/data_distance.mat';
 load '/home/cantor/Desktop/Robotique/matlab_scripts/data/data_angle.mat';
 
+%%
+
+% 
+%                                                           A'_,-'
+%                                                         _,-|
+%                                                   A _,-'   |
+%                                                 _,o'       |
+%                                             _,-'   \       |
+%                                         _,-'        \      |b
+%                                     _,-'             \ x   |
+%                                 _,-'                  \    |
+%                             _,-'                       \   |
+%                         _,-'alpha                  beta \B |B"
+%              Source S o----------------------------------o-o---------
+%                         `-. alpha         d       (y-x)/2 \|w
+%                             `-._                           o B'
+%                                 `-._                       |\
+%                                     `-._                   | \
+%                                         `-._           b-w |  \
+%                                             `-._           |   \ (y+x)/2
+%                                                 `-._       |    \
+%                                                     `-._   |     \
+%                                                         `-.|      \
+%                                                           C'`-._   \
+%                                                                 `-._\
+%                                                                     `o
+%  http://mathforum.org/library/drmath/view/55260.html                  C
+
+
+
 %% err vs d-d' 
 
 int = aggregateAllDatasets(data_distance, data_angle, 'utm', 'indoor', 'int');

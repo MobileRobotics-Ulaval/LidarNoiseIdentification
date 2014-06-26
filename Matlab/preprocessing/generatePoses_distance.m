@@ -149,57 +149,7 @@ data.(sensor).(location).(plate).(dist).result.lon = result(:, longitude);
 data.(sensor).(location).(plate).(dist).result.err_d = result(:, err_d);
 %data.(sensor).(location).(plate).(dist).result.err_n = result(:, err_n);
 
-  % compute area of ellipse at the intersection of the
-                % laser beam cone and the plate
-              
-                
-% 
-%                                                           A'_,-'
-%                                                         _,-|
-%                                                   A _,-'   |
-%                                                 _,o'       |
-%                                             _,-'   \       |
-%                                         _,-'        \      |b
-%                                     _,-'             \ x   |
-%                                 _,-'                  \    |
-%                             _,-'                       \   |
-%                         _,-'alpha                  beta \B |B"
-%              Source S o----------------------------------o-o---------
-%                         `-. alpha         d       (y-x)/2 \|w
-%                             `-._                           o B'
-%                                 `-._                       |\
-%                                     `-._                   | \
-%                                         `-._           b-w |  \
-%                                             `-._           |   \ (y+x)/2
-%                                                 `-._       |    \
-%                                                     `-._   |     \
-%                                                         `-.|      \
-%                                                           C'`-._   \
-%                                                                 `-._\
-%                                                                     `o
-%  http://mathforum.org/library/drmath/view/55260.html                  C
 
 
-if sensor == 'utm'
-    alpha = 0.0012217; % half of opening angle in rad  
-elseif sensor == 'lms'
-    alpha = 0.0072431;
-elseif sensor == 'urg'
-    alpha = 0.00113446;
-end
 
-d = data.(sensor).(location).(plate).(dist).result.d;
-err_d = data.(sensor).(location).(plate).(dist).result.err_d;
-h = d + err_d;
-inc = data.(sensor).(location).(plate).(dist).result.inc;
-beta = pi/2 - inc;
-x = h.*sin(alpha)./sin(beta+alpha);
-y = h.*sin(alpha)./sin(beta-alpha);
-semiMajorAxis = (x+y)./2;
-semiMinorAxis = (x+y).*sin(beta-alpha)./(2.*cos(alpha)) + (y-x).*sin(beta)./2;
-
-data.(sensor).(location).(plate).(dist).result.beamArea = pi.*semiMajorAxis.*semiMinorAxis;
-data.(sensor).(location).(plate).(dist).result.axisRatio = semiMajorAxis./semiMinorAxis;
-
-clear d x y inc alpha beta semiMajorAxis semiMinorAxis
 
