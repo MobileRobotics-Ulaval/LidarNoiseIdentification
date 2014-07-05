@@ -90,7 +90,7 @@ figure;
 [x_hat, y_hat, w] = ponderedStats(int, err, limitVector);
 medInt = x_hat(:,1);
 medErr = y_hat(:,2);
-plot(medInt, medErr,'x-k')
+plot(medInt, medErr,'x-r')
 title('UTM indoor : median', 'Fontsize', 15, 'Fontweight', 'demi')
 xlabel('intensity','Fontsize',15, 'Fontweight', 'demi');
 ylabel('error (m)', 'Fontsize', 15, 'Fontweight', 'demi');

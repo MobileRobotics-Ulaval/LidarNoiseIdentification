@@ -183,6 +183,7 @@ set(gca, 'Fontsize', 15);
 vitesseRecul = 40*2*pi*dist.*tan(inc); % f*2pi*d*tan(inc), f = 40 Hz
 dopplerShift = vitesseRecul.*2*(50e+6)/299792458; % Fd = 2v*ft/c
 
+% dtan(teta)
 test = dist.*tan(inc);
 
 figure;
