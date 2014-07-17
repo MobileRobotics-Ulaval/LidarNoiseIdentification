@@ -110,6 +110,7 @@ xlabel('beam area (m²)','Fontsize',15, 'Fontweight', 'demi');
 ylabel('error (m)', 'Fontsize', 15, 'Fontweight', 'demi');
 set(gca, 'Fontsize', 15);
 
+
 %% analyse beam area : angle dataset
 
 figure;
@@ -134,7 +135,7 @@ distA = distA(1:step:end);
 incA = incA(intA>0);
 incA = incA(1:step:end);
 
-scatter(areaA, errA, 4, distA);
+scatter(inc, errA, 4, distA);
 hold on;
 [x_hat, y_hat, dw] = statsPerBin(areaA, errA, 50);
 plot(x_hat(:,2),y_hat(:,2), '.k')
@@ -158,6 +159,7 @@ axisRatio = aggregateAllDatasets(datasetD, datasetA, 'utm', 'indoor', 'beamArea'
 err = aggregateAllDatasets(datasetD, datasetA,'utm', 'indoor', 'err_d');
 dist = aggregateAllDatasets(datasetD, datasetA,'utm', 'indoor', 'd');
 inc = aggregateAllDatasets(datasetD, datasetA, 'utm', 'indoor', 'inc');
+int = aggregateAllDatasets(datasetD, datasetA, 'utm', 'indoor', 'int');
 
 % filters
 step = 1;
