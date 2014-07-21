@@ -33,13 +33,17 @@ if strcmp(sensor,'utm')
     load '/home/cantor/Desktop/Robotique/matlab_scripts/data/utm_medInt.mat';
     load '/home/cantor/Desktop/Robotique/matlab_scripts/data/utm_medErr.mat';
     correction = correctionFunction(utm_medInt, utm_medErr, int);
-    d = d + correction;
 elseif strcmp(sensor, 'lms')
     load '/home/cantor/Desktop/Robotique/matlab_scripts/data/lms_medInt.mat';
     load '/home/cantor/Desktop/Robotique/matlab_scripts/data/lms_medErr.mat';
     correction = correctionFunction(lms_medInt, lms_medErr, int);
-    d = d + correction;
+elseif strcmp(sensor, 'urg')
+    load '/home/cantor/Desktop/Robotique/matlab_scripts/data/urg_medInt.mat';
+    load '/home/cantor/Desktop/Robotique/matlab_scripts/data/urg_medErr.mat';
+    correction = correctionFunction(urg_medInt, urg_medErr, int);
 end
+
+d = d + correction;
 
 x_hat = d.*sin(theta).*cos(yaw);
 y_hat = d.*sin(theta).*sin(yaw);

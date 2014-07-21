@@ -4,6 +4,261 @@ load '/home/cantor/Desktop/Robotique/matlab_scripts/data/data_angle.mat';
 load '/home/cantor/Desktop/Robotique/matlab_scripts/data/utm_corrDist.mat';
 load '/home/cantor/Desktop/Robotique/matlab_scripts/data/utm_corrAngle.mat';
 
+
+%%
+
+% 
+%                                                           A'_,-'
+%                                                         _,-|
+%                                                   A _,-'   |
+%                                                 _,o'       |
+%                                             _,-'   \       |
+%                                         _,-'        \      |b
+%                                     _,-'             \ x   |
+%                                 _,-'                  \    |
+%                             _,-'                       \   |
+%                         _,-'alpha                  beta \B |B"
+%              Source S o----------------------------------o-o---------
+%                         `-. alpha         d       (y-x)/2 \|w
+%                             `-._                           o B'
+%                                 `-._                       |\
+%                                     `-._                   | \
+%                                         `-._           b-w |  \
+%                                             `-._           |   \ (y+x)/2
+%                                                 `-._       |    \
+%                                                     `-._   |     \
+%                                                         `-.|      \
+%                                                           C'`-._   \
+%                                                                 `-._\
+%                                                                     `o
+%  http://mathforum.org/library/drmath/view/55260.html                  C
+
+
+
+%% pondered/sampled err vs d-d' 
+
+% dataD = data_distance;
+% dataA = data_angle;
+dataD = utm_corrDist;
+dataA = utm_corrAngle;
+
+int = aggregateAllDatasets(dataD, dataA, 'utm', 'indoor', 'int');
+err = aggregateAllDatasets(dataD, dataA,'utm', 'indoor', 'err_d');
+dist = aggregateAllDatasets(dataD, dataA,'utm', 'indoor', 'd');
+inc = aggregateAllDatasets(dataD, dataA,'utm', 'indoor', 'inc');
+
+% filters
+step = 1;
+int = int(int>0);
+err = err(int>0);
+dist = dist(int>0);
+inc = inc(int>0);
+int = int(1:step:end);
+err = err(1:step:end);
+dist = dist(1:step:end);
+inc = inc(1:step:end);
+
+figure;
+hist(inc);
+figure;
+hist(dist);
+
+% sampling random data
+step = 20;
+
+distLow = dist(dist <= 2.5);
+distHigh = dist(dist > 2.5);
+distLow = distLow(1:step:end);
+distSampled = [distLow ; distHigh];
+
+incLow = inc(dist <= 2.5);
+incHigh = inc(dist > 2.5);
+incLow = incLow(1:step:end);
+incSampled = [incLow ; incHigh];
+
+errLow = err(dist <= 2.5);
+errHigh = err(dist > 2.5);
+errLow = errLow(1:step:end);
+errSampled = [errLow ; errHigh];
+
+inc = incSampled;
+err = errSampled;
+dist = distSampled;
+
+figure;
+hist(incSampled);
+
+figure;
+hist(distSampled);
+
+% (distance chosen with max int)
+beta = pi/2 - inc;
+
+%good one
+halfOpeningAngle = 0.0012217;
+
+% test
+% openingAngle = 0.006;
+
+
+% distance chosen with max int value
+
+% radiusDist = (cos(inc).*(dist + err))./cos(inc - openingAngle);
+% maxErr = (dist + err) - radiusDist;
+radiusDist = (cos(inc).*(dist))./cos(inc - halfOpeningAngle);
+maxErr = (dist) - radiusDist;
+
+
+% distance chosen with centroid (triangle approx.)
+
+% x = (dist + err).*sin(openingAngle)./sin(beta+openingAngle);
+% y = (dist + err).*sin(openingAngle)./sin(beta-openingAngle);
+% centroid = 2.*(x+y)./3;
+% xPrime = centroid - y;
+% chosenDist = sqrt((dist+err).^2 + xPrime.^2 -2.*(dist+err).*xPrime.*cos(beta));
+% centroidErr = (dist + err) - chosenDist;
+x = (dist).*sin(halfOpeningAngle)./sin(beta+halfOpeningAngle);
+y = (dist).*sin(halfOpeningAngle)./sin(beta-halfOpeningAngle);
+centroid = 2.*(x+y)./3;
+xPrime = centroid - y;
+chosenDist = sqrt((dist).^2 + xPrime.^2 -2.*(dist).*xPrime.*cos(beta));
+centroidErr = (dist) - chosenDist;
+
+
+
+% distance chosen with centroid (beer-lambert approx)
+% test = exp(((dist + err) - (cos(inc).*(dist + err))./cos(inc - alpha)));
+
+
+% varX = maxErr;
+% varX = centroidErr;
+
+
+% figure;
+% hist(centroidSampled);
+% title('UTM indoor : distribution of sampled distance bias', 'Fontsize', 15, 'Fontweight', 'demi')
+% xlabel('distance bias (m)','Fontsize',15, 'Fontweight', 'demi');
+% ylabel('frequency', 'Fontsize', 15, 'Fontweight', 'demi');
+% set(gca, 'Fontsize', 15);
+
+varX = maxErr;
+
+figure;
+scatter(varX, err, 4, inc);
+hold on;
+[dx, dy, dw] = statsPerBin(varX, err, 25);
+% plot(dx(:,1),dy(:,1),'--k')
+plot(dx(:,1),dy(:,2),'.k')
+% plot(dx(:,1),dy(:,3),'--k')  
+
+title('UTM indoor sampled data: color = incidence', 'Fontsize', 15, 'Fontweight', 'demi')
+xlabel('distance bias (m)','Fontsize',15, 'Fontweight', 'demi');
+ylabel('error (m)', 'Fontsize', 15, 'Fontweight', 'demi');
+% set(gca, 'XTick', (0:0.05:max(varX)));
+set(gca, 'Fontsize', 15);
+% xlim([0, max(varX)])
+% ylim([-0.15, 0.2]);
+
+
+%% raw err vs d-d'
+
+% dataD = data_distance;
+% dataA = data_angle;
+dataD = utm_corrDist;
+dataA = utm_corrAngle;
+
+int = aggregateAllDatasets(dataD, dataA, 'utm', 'indoor', 'int');
+err = aggregateAllDatasets(dataD, dataA,'utm', 'indoor', 'err_d');
+dist = aggregateAllDatasets(dataD, dataA,'utm', 'indoor', 'd');
+inc = aggregateAllDatasets(dataD, dataA,'utm', 'indoor', 'inc');
+
+% filters
+step = 1;
+int = int(int>0);
+err = err(int>0);
+dist = dist(int>0);
+inc = inc(int>0);
+int = int(1:step:end);
+err = err(1:step:end);
+dist = dist(1:step:end);
+inc = inc(1:step:end);
+
+% (distance chosen with max int)
+beta = pi/2 - inc;
+halfOpeningAngle = 0.0012217;
+radiusDist = (cos(inc).*(dist + err))./cos(inc - halfOpeningAngle);
+maxErr = (dist + err) - radiusDist;
+
+% distance chosen with centroid (triangle approx.)
+x = (dist + err).*sin(halfOpeningAngle)./sin(beta+halfOpeningAngle);
+y = (dist + err).*sin(halfOpeningAngle)./sin(beta-halfOpeningAngle);
+centroid = 2.*(x+y)./3;
+xPrime = centroid - y;
+chosenDist = sqrt((dist+err).^2 + xPrime.^2 -2.*(dist+err).*xPrime.*cos(beta));
+centroidErr = (dist + err) - chosenDist;
+
+figure;
+scatter(centroidErr, err, 4, inc);
+hold on;
+[dx, dy, dw] = statsPerBin(centroidErr, err, 50);
+% plot(dx(:,1),dy(:,1),'--k')
+plot(dx(:,1),dy(:,2),'.k')
+% plot(dx(:,1),dy(:,3),'--k')  
+
+title('UTM indoor : color = incidence', 'Fontsize', 15, 'Fontweight', 'demi')
+xlabel('distance bias (m)','Fontsize',15, 'Fontweight', 'demi');
+ylabel('error (m)', 'Fontsize', 15, 'Fontweight', 'demi');
+% set(gca, 'XTick', (0:0.05:max(varX)));
+set(gca, 'Fontsize', 15);
+% xlim([0, max(varX)])
+% ylim([-0.15, 0.2]);
+
+% %% distance bias vs inc 
+% 
+% % dataD = data_distance;
+% % dataA = data_angle;
+% dataD = utm_corrDist;
+% dataA = utm_corrAngle;
+% 
+% int = aggregateAllDatasets(dataD, dataA, 'utm', 'indoor', 'int');
+% err = aggregateAllDatasets(dataD, dataA,'utm', 'indoor', 'err_d');
+% dist = aggregateAllDatasets(dataD, dataA,'utm', 'indoor', 'd');
+% inc = aggregateAllDatasets(dataD, dataA,'utm', 'indoor', 'inc');
+% 
+% % filters
+% step = 1;
+% int = int(int>0);
+% err = err(int>0);
+% dist = dist(int>0);
+% inc = inc(int>0);
+% int = int(1:step:end);
+% err = err(1:step:end);
+% dist = dist(1:step:end);
+% inc = inc(1:step:end);
+% 
+% % (distance chosen with max int)
+% beta = pi/2 - inc;
+% openingAngle = 0.0012217;
+% maxErr = (dist + err) - (cos(inc).*(dist + err))./cos(inc - openingAngle);
+% 
+% varX = maxErr;
+% 
+% figure;
+% scatter(inc, varX, 4, dist);
+% hold on;
+% % [dx, dy, dw] = statsPerBin(varX, err, 50);
+% % plot(dx(:,1),dy(:,1),'--k')
+% % plot(dx(:,1),dy(:,2),'.k')
+% % plot(dx(:,1),dy(:,3),'--k')  
+% 
+% title('UTM indoor : color = distance', 'Fontsize', 15, 'Fontweight', 'demi')
+% xlabel('incidence (rad)','Fontsize',15, 'Fontweight', 'demi');
+% ylabel('distance bias (m)', 'Fontsize', 15, 'Fontweight', 'demi');
+% % set(gca, 'XTick', (0:0.05:max(varX)));
+% set(gca, 'Fontsize', 15);
+% % xlim([0, max(varX)])
+% % ylim([-0.15, 0.2]);
+
 %% Intensity variation vs distance, incidence
 
 % vérifier si les gaussiennes devraient toujours être centrées à 0 rad 
@@ -176,259 +431,6 @@ xlabel('incidence','Fontsize',15, 'Fontweight', 'demi');
 ylabel('distance bias (m)', 'Fontsize', 15, 'Fontweight', 'demi');
 set(gca, 'Fontsize', 15);
 
-%%
-
-% 
-%                                                           A'_,-'
-%                                                         _,-|
-%                                                   A _,-'   |
-%                                                 _,o'       |
-%                                             _,-'   \       |
-%                                         _,-'        \      |b
-%                                     _,-'             \ x   |
-%                                 _,-'                  \    |
-%                             _,-'                       \   |
-%                         _,-'alpha                  beta \B |B"
-%              Source S o----------------------------------o-o---------
-%                         `-. alpha         d       (y-x)/2 \|w
-%                             `-._                           o B'
-%                                 `-._                       |\
-%                                     `-._                   | \
-%                                         `-._           b-w |  \
-%                                             `-._           |   \ (y+x)/2
-%                                                 `-._       |    \
-%                                                     `-._   |     \
-%                                                         `-.|      \
-%                                                           C'`-._   \
-%                                                                 `-._\
-%                                                                     `o
-%  http://mathforum.org/library/drmath/view/55260.html                  C
-
-
-
-%% pondered/sampled err vs d-d' 
-
-% dataD = data_distance;
-% dataA = data_angle;
-dataD = utm_corrDist;
-dataA = utm_corrAngle;
-
-int = aggregateAllDatasets(dataD, dataA, 'utm', 'indoor', 'int');
-err = aggregateAllDatasets(dataD, dataA,'utm', 'indoor', 'err_d');
-dist = aggregateAllDatasets(dataD, dataA,'utm', 'indoor', 'd');
-inc = aggregateAllDatasets(dataD, dataA,'utm', 'indoor', 'inc');
-
-% filters
-step = 1;
-int = int(int>0);
-err = err(int>0);
-dist = dist(int>0);
-inc = inc(int>0);
-int = int(1:step:end);
-err = err(1:step:end);
-dist = dist(1:step:end);
-inc = inc(1:step:end);
-
-figure;
-hist(inc);
-figure;
-hist(dist);
-
-% sampling random data
-step = 20;
-
-distLow = dist(dist <= 2.5);
-distHigh = dist(dist > 2.5);
-distLow = distLow(1:step:end);
-distSampled = [distLow ; distHigh];
-
-incLow = inc(dist <= 2.5);
-incHigh = inc(dist > 2.5);
-incLow = incLow(1:step:end);
-incSampled = [incLow ; incHigh];
-
-errLow = err(dist <= 2.5);
-errHigh = err(dist > 2.5);
-errLow = errLow(1:step:end);
-errSampled = [errLow ; errHigh];
-
-inc = incSampled;
-err = errSampled;
-dist = distSampled;
-
-figure;
-hist(incSampled);
-
-figure;
-hist(distSampled);
-
-% (distance chosen with max int)
-beta = pi/2 - inc;
-
-%good one
-halfOpeningAngle = 0.0012217;
-
-% test
-% openingAngle = 0.006;
-
-
-% distance chosen with max int value
-
-% radiusDist = (cos(inc).*(dist + err))./cos(inc - openingAngle);
-% maxErr = (dist + err) - radiusDist;
-radiusDist = (cos(inc).*(dist))./cos(inc - halfOpeningAngle);
-maxErr = (dist) - radiusDist;
-
-
-% distance chosen with centroid (triangle approx.)
-
-% x = (dist + err).*sin(openingAngle)./sin(beta+openingAngle);
-% y = (dist + err).*sin(openingAngle)./sin(beta-openingAngle);
-% centroid = 2.*(x+y)./3;
-% xPrime = centroid - y;
-% chosenDist = sqrt((dist+err).^2 + xPrime.^2 -2.*(dist+err).*xPrime.*cos(beta));
-% centroidErr = (dist + err) - chosenDist;
-x = (dist).*sin(halfOpeningAngle)./sin(beta+halfOpeningAngle);
-y = (dist).*sin(halfOpeningAngle)./sin(beta-halfOpeningAngle);
-centroid = 2.*(x+y)./3;
-xPrime = centroid - y;
-chosenDist = sqrt((dist).^2 + xPrime.^2 -2.*(dist).*xPrime.*cos(beta));
-centroidErr = (dist) - chosenDist;
-
-
-
-% distance chosen with centroid (beer-lambert approx)
-% test = exp(((dist + err) - (cos(inc).*(dist + err))./cos(inc - alpha)));
-
-
-% varX = maxErr;
-% varX = centroidErr;
-
-
-% figure;
-% hist(centroidSampled);
-% title('UTM indoor : distribution of sampled distance bias', 'Fontsize', 15, 'Fontweight', 'demi')
-% xlabel('distance bias (m)','Fontsize',15, 'Fontweight', 'demi');
-% ylabel('frequency', 'Fontsize', 15, 'Fontweight', 'demi');
-% set(gca, 'Fontsize', 15);
-
-varX = maxErr;
-
-figure;
-scatter(varX, err, 4, inc);
-hold on;
-[dx, dy, dw] = statsPerBin(varX, err, 50);
-% plot(dx(:,1),dy(:,1),'--k')
-plot(dx(:,1),dy(:,2),'.k')
-% plot(dx(:,1),dy(:,3),'--k')  
-
-title('UTM indoor sampled data: color = incidence', 'Fontsize', 15, 'Fontweight', 'demi')
-xlabel('distance bias (m)','Fontsize',15, 'Fontweight', 'demi');
-ylabel('error (m)', 'Fontsize', 15, 'Fontweight', 'demi');
-% set(gca, 'XTick', (0:0.05:max(varX)));
-set(gca, 'Fontsize', 15);
-% xlim([0, max(varX)])
-% ylim([-0.15, 0.2]);
-
-
-%% raw err vs d-d'
-
-% dataD = data_distance;
-% dataA = data_angle;
-dataD = utm_corrDist;
-dataA = utm_corrAngle;
-
-int = aggregateAllDatasets(dataD, dataA, 'utm', 'indoor', 'int');
-err = aggregateAllDatasets(dataD, dataA,'utm', 'indoor', 'err_d');
-dist = aggregateAllDatasets(dataD, dataA,'utm', 'indoor', 'd');
-inc = aggregateAllDatasets(dataD, dataA,'utm', 'indoor', 'inc');
-
-% filters
-step = 1;
-int = int(int>0);
-err = err(int>0);
-dist = dist(int>0);
-inc = inc(int>0);
-int = int(1:step:end);
-err = err(1:step:end);
-dist = dist(1:step:end);
-inc = inc(1:step:end);
-
-% (distance chosen with max int)
-beta = pi/2 - inc;
-halfOpeningAngle = 0.0012217;
-radiusDist = (cos(inc).*(dist + err))./cos(inc - halfOpeningAngle);
-maxErr = (dist + err) - radiusDist;
-
-% distance chosen with centroid (triangle approx.)
-x = (dist + err).*sin(halfOpeningAngle)./sin(beta+halfOpeningAngle);
-y = (dist + err).*sin(halfOpeningAngle)./sin(beta-halfOpeningAngle);
-centroid = 2.*(x+y)./3;
-xPrime = centroid - y;
-chosenDist = sqrt((dist+err).^2 + xPrime.^2 -2.*(dist+err).*xPrime.*cos(beta));
-centroidErr = (dist + err) - chosenDist;
-
-figure;
-scatter(centroidErr, err, 4, inc);
-hold on;
-[dx, dy, dw] = statsPerBin(centroidErr, err, 50);
-% plot(dx(:,1),dy(:,1),'--k')
-plot(dx(:,1),dy(:,2),'.k')
-% plot(dx(:,1),dy(:,3),'--k')  
-
-title('UTM indoor : color = incidence', 'Fontsize', 15, 'Fontweight', 'demi')
-xlabel('distance bias (m)','Fontsize',15, 'Fontweight', 'demi');
-ylabel('error (m)', 'Fontsize', 15, 'Fontweight', 'demi');
-% set(gca, 'XTick', (0:0.05:max(varX)));
-set(gca, 'Fontsize', 15);
-% xlim([0, max(varX)])
-% ylim([-0.15, 0.2]);
-
-% %% distance bias vs inc 
-% 
-% % dataD = data_distance;
-% % dataA = data_angle;
-% dataD = utm_corrDist;
-% dataA = utm_corrAngle;
-% 
-% int = aggregateAllDatasets(dataD, dataA, 'utm', 'indoor', 'int');
-% err = aggregateAllDatasets(dataD, dataA,'utm', 'indoor', 'err_d');
-% dist = aggregateAllDatasets(dataD, dataA,'utm', 'indoor', 'd');
-% inc = aggregateAllDatasets(dataD, dataA,'utm', 'indoor', 'inc');
-% 
-% % filters
-% step = 1;
-% int = int(int>0);
-% err = err(int>0);
-% dist = dist(int>0);
-% inc = inc(int>0);
-% int = int(1:step:end);
-% err = err(1:step:end);
-% dist = dist(1:step:end);
-% inc = inc(1:step:end);
-% 
-% % (distance chosen with max int)
-% beta = pi/2 - inc;
-% openingAngle = 0.0012217;
-% maxErr = (dist + err) - (cos(inc).*(dist + err))./cos(inc - openingAngle);
-% 
-% varX = maxErr;
-% 
-% figure;
-% scatter(inc, varX, 4, dist);
-% hold on;
-% % [dx, dy, dw] = statsPerBin(varX, err, 50);
-% % plot(dx(:,1),dy(:,1),'--k')
-% % plot(dx(:,1),dy(:,2),'.k')
-% % plot(dx(:,1),dy(:,3),'--k')  
-% 
-% title('UTM indoor : color = distance', 'Fontsize', 15, 'Fontweight', 'demi')
-% xlabel('incidence (rad)','Fontsize',15, 'Fontweight', 'demi');
-% ylabel('distance bias (m)', 'Fontsize', 15, 'Fontweight', 'demi');
-% % set(gca, 'XTick', (0:0.05:max(varX)));
-% set(gca, 'Fontsize', 15);
-% % xlim([0, max(varX)])
-% % ylim([-0.15, 0.2]);
 
 %% Histogram
 

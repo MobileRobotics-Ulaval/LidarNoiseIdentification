@@ -4,7 +4,7 @@
 
 % sensor = {'urg','utm','lms'};
 % location = {'indoor','outdoor'};
-sensor = {'utm'};
+sensor = {'urg'};
 location = {'indoor'};
 plate = {'board', 'alu', 'steel', 'iron'};
 dist = {'d0_2', 'd1_0', 'd2_0', 'd4_0', 'd8_0'};

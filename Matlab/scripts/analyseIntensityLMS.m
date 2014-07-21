@@ -70,24 +70,48 @@ err = err(1:step:end);
 dist = dist(1:step:end);
 
 % remove random sample from 20 cm data
+% shortDist = dist(dist<1);
+% longDist = dist(dist>=1);
+% randIndex = randsample(length(shortDist), floor(length(shortDist)/2.5))';
+% shortDistRand = shortDist(randIndex);
+% randDist = [shortDistRand ; longDist];
+% 
+% % sampled variables 
+% randShortInt = int(randIndex);
+% randLongInt = int(dist>=1);
+% randInt = [randShortInt ; randLongInt];
+% 
+% randShortErr = err(randIndex);
+% randLongErr = err(dist>=1);
+% randErr = [randShortErr ; randLongErr];
+% 
+% randShortInc = inc(randIndex);
+% randLongInc = inc(dist>=1);
+% randInc = [randShortInc ; randLongInc];
+
+step = 2.5;
+
 shortDist = dist(dist<1);
 longDist = dist(dist>=1);
-randIndex = randsample(length(shortDist), floor(length(shortDist)/2.5))';
-shortDistRand = shortDist(randIndex);
+shortDistRand = shortDist(1:step:end);
 randDist = [shortDistRand ; longDist];
 
 % sampled variables 
-randShortInt = int(randIndex);
-randLongInt = int(dist>=1);
-randInt = [randShortInt ; randLongInt];
+shortInt = int(dist<1);
+longInt = int(dist>=1);
+shortIntRand = shortInt(1:step:end);
+randInt = [shortIntRand ; longInt];
 
-randShortErr = err(randIndex);
-randLongErr = err(dist>=1);
-randErr = [randShortErr ; randLongErr];
+shortErr = err(dist<1);
+longErr = err(dist>=1);
+shortErrRand = shortErr(1:step:end);
+randErr = [shortErrRand ; longErr];
 
-randShortInc = inc(randIndex);
-randLongInc = inc(dist>=1);
-randInc = [randShortInc ; randLongInc];
+shortInc = inc(dist<1);
+longInc = inc(dist>=1);
+shortIncRand = shortInc(1:step:end);
+randInc = [shortIncRand ; longInc];
+
 
 limitVector = [(0:50:150), (200:25:325), (340:12:500), 515, 525, 550, 575, 600, 615, 625, 650, 700, 750, 800, 900, (1000:200:max(int))];
 
