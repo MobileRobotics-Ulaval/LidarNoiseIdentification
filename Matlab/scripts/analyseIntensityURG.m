@@ -11,6 +11,7 @@ load '/home/cantor/Desktop/Robotique/matlab_scripts/data/urg_corrDist.mat';
 int = aggregateData_distance(data_distance,'urg', 'indoor', 'int');
 err = aggregateData_distance(data_distance,'urg', 'indoor', 'err_d');
 dist = aggregateData_distance(data_distance,'urg', 'indoor', 'd');
+inc = aggregateData_distance(data_distance,'urg', 'indoor', 'inc');
 
 % filters
 step = 1;
@@ -102,3 +103,31 @@ set(gca, 'XTick', (0:1000:max(int)));
 set(gca, 'Fontsize', 15);
 
 %ylim([-0.15, 0.2]);
+
+
+%% err vs inc (test)
+
+varX = inc;
+varY = err;
+
+figure;
+scatter(varX, varY, 4, dist);
+hold on;
+[dx, dy, dw] = statsPerBin(varX, varY, 25);
+plot(dx(:,1),dy(:,1),'--k')
+plot(dx(:,1),dy(:,2),'.k')
+plot(dx(:,1),dy(:,3),'--k')  
+
+%% err vs dist (test)
+
+varX = dist;
+varY = err;
+color = inc;
+
+figure;
+scatter(varX, varY, 4, color);
+hold on;
+[dx, dy, dw] = statsPerBin(varX, varY, 25);
+plot(dx(:,1),dy(:,1),'--k')
+plot(dx(:,1),dy(:,2),'.k')
+plot(dx(:,1),dy(:,3),'--k')  

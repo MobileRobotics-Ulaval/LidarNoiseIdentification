@@ -35,7 +35,7 @@ load '/home/cantor/Desktop/Robotique/matlab_scripts/data/utm_corrAngle.mat';
 
 
 
-%% pondered/sampled err vs d-d' 
+%% sampled err vs distance prediction 
 
 % dataD = data_distance;
 % dataA = data_angle;
@@ -59,11 +59,10 @@ dist = dist(1:step:end);
 inc = inc(1:step:end);
 
 figure;
-hist(inc);
-figure;
 hist(dist);
+title('histogram of unsampled distance', 'Fontsize', 15, 'Fontweight', 'demi')
 
-% sampling random data
+% sampling data
 step = 20;
 
 distLow = dist(dist <= 2.5);
@@ -86,22 +85,14 @@ err = errSampled;
 dist = distSampled;
 
 figure;
-hist(incSampled);
-
-figure;
 hist(distSampled);
+title('histogram of sampled distance', 'Fontsize', 15, 'Fontweight', 'demi')
 
 % (distance chosen with max int)
 beta = pi/2 - inc;
 
-%good one
 halfOpeningAngle = 0.0012217;
 
-% test
-% openingAngle = 0.006;
-
-
-% distance chosen with max int value
 
 % radiusDist = (cos(inc).*(dist + err))./cos(inc - openingAngle);
 % maxErr = (dist + err) - radiusDist;
@@ -125,23 +116,8 @@ chosenDist = sqrt((dist).^2 + xPrime.^2 -2.*(dist).*xPrime.*cos(beta));
 centroidErr = (dist) - chosenDist;
 
 
-
-% distance chosen with centroid (beer-lambert approx)
-% test = exp(((dist + err) - (cos(inc).*(dist + err))./cos(inc - alpha)));
-
-
-% varX = maxErr;
-% varX = centroidErr;
-
-
-% figure;
-% hist(centroidSampled);
-% title('UTM indoor : distribution of sampled distance bias', 'Fontsize', 15, 'Fontweight', 'demi')
-% xlabel('distance bias (m)','Fontsize',15, 'Fontweight', 'demi');
-% ylabel('frequency', 'Fontsize', 15, 'Fontweight', 'demi');
-% set(gca, 'Fontsize', 15);
-
 varX = maxErr;
+% varX = centroidErr;
 
 figure;
 scatter(varX, err, 4, inc);
@@ -152,15 +128,15 @@ plot(dx(:,1),dy(:,2),'.k')
 % plot(dx(:,1),dy(:,3),'--k')  
 
 title('UTM indoor sampled data: color = incidence', 'Fontsize', 15, 'Fontweight', 'demi')
-xlabel('distance bias (m)','Fontsize',15, 'Fontweight', 'demi');
-ylabel('error (m)', 'Fontsize', 15, 'Fontweight', 'demi');
+xlabel('error model prediction (m)','Fontsize',15, 'Fontweight', 'demi');
+ylabel('measured error (m)', 'Fontsize', 15, 'Fontweight', 'demi');
 % set(gca, 'XTick', (0:0.05:max(varX)));
 set(gca, 'Fontsize', 15);
 % xlim([0, max(varX)])
 % ylim([-0.15, 0.2]);
 
 
-%% raw err vs d-d'
+%% raw (not sampled) err vs distance prediction
 
 % dataD = data_distance;
 % dataA = data_angle;
@@ -186,8 +162,8 @@ inc = inc(1:step:end);
 % (distance chosen with max int)
 beta = pi/2 - inc;
 halfOpeningAngle = 0.0012217;
-radiusDist = (cos(inc).*(dist + err))./cos(inc - halfOpeningAngle);
-maxErr = (dist + err) - radiusDist;
+minRadius = (cos(inc).*(dist + err))./cos(inc - halfOpeningAngle);
+maxErr = (dist + err) - minRadius;
 
 % distance chosen with centroid (triangle approx.)
 x = (dist + err).*sin(halfOpeningAngle)./sin(beta+halfOpeningAngle);
@@ -197,71 +173,28 @@ xPrime = centroid - y;
 chosenDist = sqrt((dist+err).^2 + xPrime.^2 -2.*(dist+err).*xPrime.*cos(beta));
 centroidErr = (dist + err) - chosenDist;
 
+varX = maxErr;
+varY = err;
+color = inc;
+
 figure;
-scatter(centroidErr, err, 4, inc);
+scatter(varX, varY, 4, color);
 hold on;
-[dx, dy, dw] = statsPerBin(centroidErr, err, 50);
+[dx, dy, dw] = statsPerBin(varX, varY, 25);
 % plot(dx(:,1),dy(:,1),'--k')
 plot(dx(:,1),dy(:,2),'.k')
 % plot(dx(:,1),dy(:,3),'--k')  
 
 title('UTM indoor : color = incidence', 'Fontsize', 15, 'Fontweight', 'demi')
-xlabel('distance bias (m)','Fontsize',15, 'Fontweight', 'demi');
+xlabel('distance prediction (m)','Fontsize',15, 'Fontweight', 'demi');
 ylabel('error (m)', 'Fontsize', 15, 'Fontweight', 'demi');
 % set(gca, 'XTick', (0:0.05:max(varX)));
 set(gca, 'Fontsize', 15);
 % xlim([0, max(varX)])
 % ylim([-0.15, 0.2]);
 
-% %% distance bias vs inc 
-% 
-% % dataD = data_distance;
-% % dataA = data_angle;
-% dataD = utm_corrDist;
-% dataA = utm_corrAngle;
-% 
-% int = aggregateAllDatasets(dataD, dataA, 'utm', 'indoor', 'int');
-% err = aggregateAllDatasets(dataD, dataA,'utm', 'indoor', 'err_d');
-% dist = aggregateAllDatasets(dataD, dataA,'utm', 'indoor', 'd');
-% inc = aggregateAllDatasets(dataD, dataA,'utm', 'indoor', 'inc');
-% 
-% % filters
-% step = 1;
-% int = int(int>0);
-% err = err(int>0);
-% dist = dist(int>0);
-% inc = inc(int>0);
-% int = int(1:step:end);
-% err = err(1:step:end);
-% dist = dist(1:step:end);
-% inc = inc(1:step:end);
-% 
-% % (distance chosen with max int)
-% beta = pi/2 - inc;
-% openingAngle = 0.0012217;
-% maxErr = (dist + err) - (cos(inc).*(dist + err))./cos(inc - openingAngle);
-% 
-% varX = maxErr;
-% 
-% figure;
-% scatter(inc, varX, 4, dist);
-% hold on;
-% % [dx, dy, dw] = statsPerBin(varX, err, 50);
-% % plot(dx(:,1),dy(:,1),'--k')
-% % plot(dx(:,1),dy(:,2),'.k')
-% % plot(dx(:,1),dy(:,3),'--k')  
-% 
-% title('UTM indoor : color = distance', 'Fontsize', 15, 'Fontweight', 'demi')
-% xlabel('incidence (rad)','Fontsize',15, 'Fontweight', 'demi');
-% ylabel('distance bias (m)', 'Fontsize', 15, 'Fontweight', 'demi');
-% % set(gca, 'XTick', (0:0.05:max(varX)));
-% set(gca, 'Fontsize', 15);
-% % xlim([0, max(varX)])
-% % ylim([-0.15, 0.2]);
 
-%% Intensity variation vs distance, incidence
-
-% vérifier si les gaussiennes devraient toujours être centrées à 0 rad 
+%% Intensity variation vs distance, incidence (theoretical model)
 
 % dataD = data_distance;
 % dataA = data_angle;
@@ -269,13 +202,11 @@ set(gca, 'Fontsize', 15);
 record =  {'75°', '60°', '45°', '30°', '15°', '0°'};
 record2 =  {'70°','63°','56°','49°','42°','35°', '28°', '21°', '14°', '7°', '0°'};
 
-
-
 sensorHalfAngle = 0.0012217;
 
 beta = @(inc) pi/2 - inc;
 
-% voir figure en haut pour x et y
+% voir ASCII art en haut pour x et y
 x = @(inc, dist) ((dist).*sin(sensorHalfAngle)./sin(beta(inc)+sensorHalfAngle));
 y = @(inc, dist) (-(dist).*sin(sensorHalfAngle)./sin(beta(inc)-sensorHalfAngle));
 mu = @(inc, dist) ((x(inc, dist)+y(inc, dist))/2);
@@ -288,8 +219,6 @@ sigma = @(inc, dist) ((abs(x(inc, dist)) + abs(y(inc, dist)))/6);
 distanceFunction = @(alpha, inc, dist) ((cos(inc).*(dist))./cos(inc - alpha));
 intensityFunction = @(alpha, inc, dist) ((-(distanceFunction(alpha, inc, dist))));
 backscatterFunction = @(alpha, inc, dist) (exp(-((alpha-mu(inc, dist)).^2)./(2.*sigma(inc, dist).^2)) ./ (sqrt(2*pi).*sigma(inc, dist)));
-
-% returnIntensity = @(alpha, inc, dist) (intensityFunction(alpha, inc, dist)) .* (backscatterFunction(alpha, inc, dist));
 
 normalized = @(x) ((x - min(x))./max((x - min(x))));
 
@@ -445,16 +374,9 @@ figure;
 % limit vector for sampled data
 limitVector = [0, 0.00025, 0.0005, 0.00075, (0.001:0.0007:0.00275), (0.00375:0.001:0.004) (0.005:0.0025:max(varX)) ];
 
-%test if beam angle is 0.006
-% limitVector = [0, 0.0025, 0.005, (0.01:0.005:0.0275), (0.0375:0.01:0.04) (0.05:0.019:max(varX)) ];
-
 % hist
 count = histc(varX, limitVector);
 bar(limitVector, count, 'histc')
-% set(gca, 'xlim', [limitVector(1) limitVector(end)])
-%set(gca, 'YTick', (0:7500:150000));
-% set(gca, 'XTick', (0:1000:max(int)));
-%xticklabel_rotate(XTick,45,[],'Fontsize',15);
 title('UTM indoor : distribution of distance bias', 'Fontsize', 15, 'Fontweight', 'demi')
 xlabel('distance bias (m)','Fontsize',15, 'Fontweight', 'demi');
 ylabel('frequency', 'Fontsize', 15, 'Fontweight', 'demi');
@@ -471,7 +393,7 @@ varY = err;
 [x_hat, y_hat, w] = ponderedStats(varX, varY, limitVector);
 medX = x_hat(:,1);
 medErr = y_hat(:,2);
-plot(medX, medErr,'.-k')
+plot(medX, medErr,'.k')
 title('UTM indoor : median', 'Fontsize', 15, 'Fontweight', 'demi')
 xlabel('distance bias (m)','Fontsize',15, 'Fontweight', 'demi');
 ylabel('error (m)', 'Fontsize', 15, 'Fontweight', 'demi');
@@ -480,7 +402,7 @@ ylabel('error (m)', 'Fontsize', 15, 'Fontweight', 'demi');
 set(gca, 'Fontsize', 15);
 
 
-%% angle dataset only (linear as fuck)
+%% angle dataset only (linear as hell)
 
 err = aggregateData_angles(utm_corrAngle,'utm', 'err_d');
 dist = aggregateData_angles(utm_corrAngle,'utm', 'd');
@@ -512,10 +434,6 @@ xPrime = centroid - y;
 chosenDist = sqrt((dist+err).^2 + xPrime.^2 -2.*(dist+err).*xPrime.*cos(beta));
 centroidErr = (dist + err) - chosenDist;
 
-% distance chosen with centroid (beer-lambert approx)
-% test = exp(((dist + err) - (cos(inc).*(dist + err))./cos(inc - alpha)));
-
-
 varX = maxErr;
 varX = centroidErr;
 
@@ -540,7 +458,6 @@ dataA = utm_corrAngle;
 
 figure;
 limitVector = [(0:0.000075:0.0005) (0.00075:0.0005:0.003) 0.004 0.005 0.006 0.007 max(centroidErr)];
-% limitVector = [min(varX) 0.98 0.985 (0.99:0.0005:max(varX))];
 
 % hist
 count = histc(varX,limitVector);
@@ -580,7 +497,7 @@ figure;
 [x_hat, y_hat, w] = ponderedStats(varX, err, limitVector);
 medX = x_hat(:,1);
 medErr = y_hat(:,2);
-plot(medX, medErr,'x-r')
+plot(medX, medErr,'.r')
 title('UTM indoor : median', 'Fontsize', 15, 'Fontweight', 'demi')
 xlabel('distance bias (m)','Fontsize',15, 'Fontweight', 'demi');
 ylabel('error (m)', 'Fontsize', 15, 'Fontweight', 'demi');
@@ -652,31 +569,6 @@ filtDist = dDist(dFilter);
 filtInt = dInt(dFilter);
 plot(filtDist, filtInt, '.b')
 
-%% fittings
-
-% mauvais fittings qui ne prennent pas en compte distance 20 cm
-
-% all plates : -14.78x² - 437.1x + 2350
-% board : 22.51x² - 371.9x + 2231
-% alu : 141.4x² - 786.1x + 2593
-% steel : 42.37x² - 498.7x + 2190
-% iron : 22.06x² - 498.5x + 3007
-
-figure;
-hold on;    
-x = (0:0.1:50);
-
-plot(x, -4.962.*x.^2 - 231.6.*x + 2881, 'k') 
-plot(x, 7.597.*x.^2 - 269.7.*x + 3090, 'b')
-plot(x, 39.75.*x.^2 - 654.1.*x + 4191, 'r')
-plot(x, 21.35.*x.^2 - 454.9.*x + 3145, 'g')
-plot(x, 22.06.*x.^2 - 498.5.*x + 3007, 'm')
-
-title('UTM intensity VS distance (0.1 < inc < 0.12)', 'Fontsize', 15, 'Fontweight', 'demi')
-xlabel('distance (m)','Fontsize',15, 'Fontweight', 'demi');
-ylabel('intensity', 'Fontsize', 15, 'Fontweight', 'demi');
-set(gca, 'Fontsize', 15);
-legend('all plates', 'board', 'alu', 'steel', 'iron');
 
 %% single plate plot int vs dist
 
@@ -698,20 +590,3 @@ plot(pfDist, pfInt, '.b')
 % medX = dx(:,2);
 % medY = dy(:,2);
 % plot(medX, medY, '.r')
-
-%% intensity vs horizontal distance (angle dataset)
-
-angle = 'a75';
-plate = 'iron';
-px = data_angle.lms.indoor.(plate).(angle).result.px;
-int = data_angle.lms.indoor.(plate).(angle).result.int;
-
-figure;
-plot(px, int, '.b')
-hold on;
-[dx, dy, dw] = statsPerBin(px, int, 20);
-medX = dx(:,2);
-medY = dy(:,2);
-plot(medX, medY, '.k')
-
-

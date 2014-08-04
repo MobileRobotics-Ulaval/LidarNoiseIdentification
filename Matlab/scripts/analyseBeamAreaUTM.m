@@ -5,6 +5,41 @@ load '/home/cantor/Desktop/Robotique/matlab_scripts/data/data_angle.mat';
 load '/home/cantor/Desktop/Robotique/matlab_scripts/data/utm_corrAngle.mat';
 load '/home/cantor/Desktop/Robotique/matlab_scripts/data/utm_corrDist.mat';
 
+%% allDatasets : error vs beam area
+
+figure;
+
+% datasetD = utm_corrDist;
+% datasetA = utm_corrAngle;
+datasetD = data_distance;
+datasetA = data_angle;
+
+axisRatio = aggregateAllDatasets(datasetD, datasetA, 'utm', 'indoor', 'beamArea');
+err = aggregateAllDatasets(datasetD, datasetA,'utm', 'indoor', 'err_d');
+dist = aggregateAllDatasets(datasetD, datasetA,'utm', 'indoor', 'd');
+inc = aggregateAllDatasets(datasetD, datasetA, 'utm', 'indoor', 'inc');
+int = aggregateAllDatasets(datasetD, datasetA, 'utm', 'indoor', 'int');
+
+% filters
+step = 1;
+axisRatio = axisRatio(axisRatio>0);
+err = err(axisRatio>0);
+dist = dist(axisRatio>0);
+axisRatio = axisRatio(1:step:end);
+err = err(1:step:end);
+dist = dist(1:step:end);
+
+scatter(axisRatio, err, 4, dist);
+hold on;
+[dx, dy, dw] = statsPerBin(axisRatio, err, 50);
+plot(dx(:,2), dy(:,2), '.k')
+
+title('UTM indoor (intensity corrected): all plates, color = distance', 'Fontsize', 15, 'Fontweight', 'demi')
+xlabel('beam area (m²)','Fontsize',15, 'Fontweight', 'demi');
+ylabel('error (m)', 'Fontsize', 15, 'Fontweight', 'demi');
+set(gca, 'Fontsize', 15);
+
+
 %% UTM indoor single plate all angle
 
 plate = 'alu';
@@ -23,8 +58,6 @@ plot(path.a0.result.(varX), path.a0.result.(varY), '.k',...
      path.a45.result.(varX), path.a45.result.(varY), '.b',...
      path.a60.result.(varX), path.a60.result.(varY), '.y',...
      path.a75.result.(varX), path.a75.result.(varY), '.c')
- 
-      
  
  title('UTM indoor (intensity corrected) : alu plate', 'Fontsize', 15, 'Fontweight', 'demi')
 xlabel('beam area (m²)','Fontsize',15, 'Fontweight', 'demi');
@@ -144,88 +177,3 @@ title('UTM indoor (intensity corrected): angle dataset, color = distance', 'Font
 xlabel('beam area (m²)','Fontsize',15, 'Fontweight', 'demi');
 ylabel('error (m)', 'Fontsize', 15, 'Fontweight', 'demi');
 set(gca, 'Fontsize', 15);
-
-
-%% allDatasets
-
-figure;
-
-% datasetD = utm_corrDist;
-% datasetA = utm_corrAngle;
-datasetD = data_distance;
-datasetA = data_angle;
-
-axisRatio = aggregateAllDatasets(datasetD, datasetA, 'utm', 'indoor', 'beamArea');
-err = aggregateAllDatasets(datasetD, datasetA,'utm', 'indoor', 'err_d');
-dist = aggregateAllDatasets(datasetD, datasetA,'utm', 'indoor', 'd');
-inc = aggregateAllDatasets(datasetD, datasetA, 'utm', 'indoor', 'inc');
-int = aggregateAllDatasets(datasetD, datasetA, 'utm', 'indoor', 'int');
-
-% filters
-step = 1;
-axisRatio = axisRatio(axisRatio>0);
-err = err(axisRatio>0);
-dist = dist(axisRatio>0);
-axisRatio = axisRatio(1:step:end);
-err = err(1:step:end);
-dist = dist(1:step:end);
-
-scatter(axisRatio, err, 4, dist);
-hold on;
-[dx, dy, dw] = statsPerBin(axisRatio, err, 50);
-plot(dx(:,2), dy(:,2), '.k')
-
-title('UTM indoor (intensity corrected): all plates, color = distance', 'Fontsize', 15, 'Fontweight', 'demi')
-xlabel('beam area (m²)','Fontsize',15, 'Fontweight', 'demi');
-ylabel('error (m)', 'Fontsize', 15, 'Fontweight', 'demi');
-set(gca, 'Fontsize', 15);
-
-%% Test 
-
-vitesseRecul = 40*2*pi*dist.*tan(inc); % f*2pi*d*tan(inc), f = 40 Hz
-dopplerShift = vitesseRecul.*2*(50e+6)/299792458; % Fd = 2v*ft/c
-
-% dtan(teta)
-test = dist.*tan(inc);
-
-figure;
-scatter(test, err, 4, dist);
-hold on;
-% [dx, dy, dw] = statsPerBin(dopplerShift, err, 50);
-% plot(dx(:,2), dy(:,2), '.k')
-
-title('UTM indoor : all plates, color = incidence', 'Fontsize', 15, 'Fontweight', 'demi')
-xlabel('Testtttt','Fontsize',15, 'Fontweight', 'demi');
-ylabel('error (m)', 'Fontsize', 15, 'Fontweight', 'demi');
-set(gca, 'Fontsize', 15);
-
-%% double test
-
-datasetD = dist_axisRatio;
-datasetA = angle_axisRatio;
-
-axisRatio = aggregateAllDatasets(datasetD, datasetA, 'utm', 'indoor', 'axisRatio');
-err = aggregateAllDatasets(datasetD, datasetA,'utm', 'indoor', 'err_d');
-dist = aggregateAllDatasets(datasetD, datasetA,'utm', 'indoor', 'd');
-inc = aggregateAllDatasets(datasetD, datasetA, 'utm', 'indoor', 'inc');
-
-% filters
-step = 1;
-axisRatio = axisRatio(axisRatio>0);
-err = err(axisRatio>0);
-dist = dist(axisRatio>0);
-axisRatio = axisRatio(1:step:end);
-err = err(1:step:end);
-dist = dist(1:step:end);
-figure;
-scatter(inc, err, 4, dist);
-hold on;
-[dx, dy, dw] = statsPerBin(inc, err, 50);
-plot(dx(:,2), dy(:,2), '.k')
-
-title('UTM indoor : all plates, color = incidence', 'Fontsize', 15, 'Fontweight', 'demi')
-xlabel('Ellipse elongation','Fontsize',15, 'Fontweight', 'demi');
-ylabel('error (m)', 'Fontsize', 15, 'Fontweight', 'demi');
-set(gca, 'Fontsize', 15);
-
-

@@ -7,11 +7,11 @@ load '/home/cantor/Desktop/Robotique/matlab_scripts/data/data_distance.mat';
 
 plate = 'alu';
 sensor = 'utm';
-dataSet = data_angle;
+dataset = data_angle;
 
 varX = 'inc';
 varY = 'err_d';
-path = dataSet.(sensor).indoor.(plate);
+path = dataset.(sensor).indoor.(plate);
 
 figure;
 plot(path.a0.result.(varX), path.a0.result.(varY), '.k',...
@@ -33,13 +33,12 @@ legend('0°','15°','30°','45°','60°','75°')
 %% UTM all plates 75 degree : error vs horizontal position on the plate
 
 sensor = 'utm';
-%dataSet = data_angle;
+dataset = data_angle;
 %dataSet = utm_corrAngle;
-dataSet = corrAngleWithArea;
 
 varX = 'inc';
 varY = 'err_d';
-path = dataSet.(sensor).indoor;
+path = dataset.(sensor).indoor;
 angle = 'a0';
 
 figure;
@@ -50,16 +49,16 @@ plot(path.board.(angle).result.(varX), path.board.(angle).result.(varY), '.k',..
  
 hold on;
 step = 1;
-allInt = aggregateData_angles(corrAngleWithArea, 'utm', 'int');
+allInt = aggregateData_angles(dataset, 'utm', 'int');
 allInt = allInt(allInt>0);
 allInt = allInt(1:step:end);
-allErr = aggregateData_angles(corrAngleWithArea, 'utm', 'err_d');
+allErr = aggregateData_angles(dataset, 'utm', 'err_d');
 allErr = allErr(allInt>0);
 allErr = allErr(1:step:end);
-allInc = aggregateData_angles(corrAngleWithArea, 'utm', 'inc');
+allInc = aggregateData_angles(dataset, 'utm', 'inc');
 allInc = allInc(allInt>0);
 allInc = allInc(1:step:end);
-allD = aggregateData_angles(corrAngleWithArea, 'utm', 'd');
+allD = aggregateData_angles(dataset, 'utm', 'd');
 allD = allD(allInt>0);
 allD = allD(1:step:end);
 
